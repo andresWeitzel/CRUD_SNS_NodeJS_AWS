@@ -23,7 +23,7 @@ plugins:
 
 functions:
   createManualTopic:
-    handler: handler.createManualTopic
+    handler: src/lambdas/createManualTopic.handler
     name: create-manual-topic-sns
     description: to create a manual topic
     events:
