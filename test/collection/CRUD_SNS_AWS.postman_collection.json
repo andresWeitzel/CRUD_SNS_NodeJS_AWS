@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "e3b81eb1-4282-4d98-8cf0-ffb60df28fcd",
+		"name": "CRUD_SNS_AWS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18757319"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "create-topic",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/dev/create-manual-topic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"create-manual-topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "publish-topic",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/dev/publish-topic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"publish-topic"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "list-topics",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/dev/list-topics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"list-topics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000/dev"
+		},
+		{
+			"key": "x-api-key",
+			"value": "f98d8cd98h73s204e3456998ecl9427j"
+		},
+		{
+			"key": "bearer_token",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+		}
+	]
+}
