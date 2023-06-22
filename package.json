@@ -1,0 +1,24 @@
+{
+  "name": "sns_nodejs_aws",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresWeitzel/SNS_NodeJs_AWS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andresWeitzel/SNS_NodeJs_AWS/issues"
+  },
+  "homepage": "https://github.com/andresWeitzel/SNS_NodeJs_AWS#readme",
+  "devDependencies": {
+    "serverless-offline": "^12.0.4",
+    "serverless-offline-ssm": "^6.2.0"
+  }
+}
