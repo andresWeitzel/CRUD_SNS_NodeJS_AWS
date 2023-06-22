@@ -1,18 +1,35 @@
 'use strict';
+//External
+const {SNSClient, PublishCommand, ListTopicsCommand } = require("@aws-sdk/client-sns");
+//Environment Vars
+const ACCESS_KEY = process.env.AWS_ACCESS_KEY_RANDOM_VALUE;
+const SECRET_KEY = process.env.AWS_SECRET_KEY_RANDOM_VALUE;
+const REGION = process.env.REGION;
+const ENDPOINT = process.env.SNS_URL;
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+module.exports.createTopic = async (event) => {
+  try{
+    
+    let snsClient = new SNSClient({
+      region: REGION,
+      accessKeyId: ACCESS_KEY,
+      secretAccessKey: SECRET_KEY,
+      //endpoint: ENDPOINT,
+    });
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+      let params = {
+        Message: "MESSAGE_TEXT", // MESSAGE_TEXT
+        TopicArn: "TopicExample", //TOPIC_ARN
+      };
+
+      //const data = await snsClient.send(new PublishCommand(params));
+      
+    const data = await snsClient.send(new ListTopicsCommand({}));
+      console.log("Success.",  data);
+      return data; // For unit tests.
+
+
+  }catch(e){
+console.log(e);
+  }
 };
