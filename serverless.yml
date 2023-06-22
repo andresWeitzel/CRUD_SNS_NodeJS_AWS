@@ -22,18 +22,39 @@ plugins:
   - serverless-offline 
 
 functions:
-  createTopic:
-    handler: handler.createTopic
-    name: create-topic-sns
-    description: to create a topic
+  createManualTopic:
+    handler: handler.createManualTopic
+    name: create-manual-topic-sns
+    description: to create a manual topic
     events:
       - http:
           method: POST
-          path: create-topic
+          path: create-manual-topic
+          private: true        
+
+  listTopics:
+    handler: handler.listTopics
+    name: list-topic-sns
+    description: to list all topics
+    events:
+      - http:
+          method: GET
+          path: list-topics
           private: true
       - sns:
-          arn: !Ref TopicExample
-          topicName: TopicExample    
+          arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}           
+
+  publishTopic:
+      handler: handler.publishTopic
+      name: publish-topic-sns
+      description: to publish a specific topic
+      events:
+        - http:
+            method: POST
+            path: publish-topic
+            private: true
+
+              
 
 custom:
   serverless-offline:
@@ -41,8 +62,8 @@ custom:
     lambdaPort: ${file(./serverless_ssm.yml):SERVERLESS_LAMBDA_PORT}
   serverless-offline-sns:
     port: ${file(./serverless_ssm.yml):SNS_PORT}
-    #host: ${file(./serverless_ssm.yml):SNS_HOST}
-    #sns-endpoint: ${file(./serverless_ssm.yml):SNS_ENDPOINT}
+    host: ${file(./serverless_ssm.yml):SNS_HOST}
+    sns-endpoint: ${file(./serverless_ssm.yml):SNS_ENDPOINT}
     debug: true
   serverless-offline-ssm:
     stages:

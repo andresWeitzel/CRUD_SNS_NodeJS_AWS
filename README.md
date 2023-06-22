@@ -349,7 +349,7 @@ npm start
 
 #### Ejemplos de código
 * [serverless-offline-sns-example](https://github.com/mj1618/serverless-offline-sns-example/blob/master/handler.js)
-* [Tutotial awssdk v2](https://unpkg.com/browse/serverless-offline-sns@0.65.0/README.md)
+* [Tutotial aws-sdk v2](https://unpkg.com/browse/serverless-offline-sns@0.65.0/README.md)
 * [Amazon Simple Notification Service (SNS) JavaScript SDK v3 code examples](https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/sns)
 
 <br>
