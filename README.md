@@ -1,6 +1,4 @@
-![Index app](./doc/assets/img/Producer_Consumer_SQS_FIFO_AWS.drawio.png)
-
-# Producer_Consumer_SQS_FIFO_AWS
+# SNS_NodeJS_AWS
 Comunicación entre lambdas a través de amazon simple notification service (SNS) implementado con Systems Manager Parameter Store, Api-Gateway, Amazon SNS, Serverless-Framework, Lambda, NodeJs, aws sdk-v3, entre otros.
 
 * [Playlist proyecto](https://www.youtube.com/watch?v=sGK_4FQBdP8&list=PLCl11UFjHurCkJNddrHBJ_TUfMlrHuWyb)
