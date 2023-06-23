@@ -33,7 +33,7 @@ functions:
           private: true        
 
   listTopics:
-    handler: handler.listTopics
+    handler: src/lambdas/listTopics.handler
     name: list-topic-sns
     description: to list all topics
     events:
@@ -45,7 +45,7 @@ functions:
           arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}           
 
   publishTopic:
-      handler: handler.publishTopic
+      handler: src/lambdas/publishTopic.handler
       name: publish-topic-sns
       description: to publish a specific topic
       events:
@@ -53,7 +53,8 @@ functions:
             method: POST
             path: publish-topic
             private: true
-
+        - sns:
+            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}  
               
 
 custom:

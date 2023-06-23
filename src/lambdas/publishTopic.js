@@ -1,13 +1,18 @@
 "use strict";
 //External
-const { CreateTopicCommand } = require("@aws-sdk/client-sns");
+const { PublishCommand } = require("@aws-sdk/client-sns");
 //Helpers
 const { snsClient } = require("../helpers/sns/config/snsClient");
 const { statusCode } = require("../helpers/enums/http/statusCode");
 const { bodyResponse } = require("../helpers/http/bodyResponse");
+//Environment vars
+const SNS_ARN = process.env.SNS_DEFAULT_ARN;
 //Const-vars
 let client;
-let params = { Name: "ManualTopic" };
+let params = {
+    Message: "MESSAGE_TEXT",
+    TopicArn: SNS_ARN,
+  };
 let data;
 let code;
 let msg;
@@ -16,7 +21,7 @@ module.exports.handler = async (event) => {
   try {
     client = await snsClient();
 
-    data = await client.send(new CreateTopicCommand(params));
+    data = await client.send(new PublishCommand(params));
 
     if (data != null && data != undefined) {
       console.log(data);
@@ -26,7 +31,7 @@ module.exports.handler = async (event) => {
     }
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;
-    msg = `Error in CREATE MANUAL TOPIC lambda. Caused by ${error}`;
+    msg = `Error in PUBLISH TOPIC lambda. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
 
     return await bodyResponse(code, msg);
