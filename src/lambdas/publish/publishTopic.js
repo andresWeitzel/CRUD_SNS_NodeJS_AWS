@@ -2,17 +2,14 @@
 //External
 const { PublishCommand } = require("@aws-sdk/client-sns");
 //Helpers
-const { snsClient } = require("../helpers/sns/config/snsClient");
-const { statusCode } = require("../helpers/enums/http/statusCode");
-const { bodyResponse } = require("../helpers/http/bodyResponse");
+const { snsClient } = require("../../helpers/sns/config/snsClient");
+const { statusCode } = require("../../helpers/enums/http/statusCode");
+const { bodyResponse } = require("../../helpers/http/bodyResponse");
 //Environment vars
-const SNS_ARN = process.env.SNS_DEFAULT_ARN;
+const SNS_NAME = process.env.SNS_DEFAULT_NAME;
 //Const-vars
 let client;
-let params = {
-    Message: "MESSAGE_TEXT",
-    TopicArn: SNS_ARN,
-  };
+let params;
 let data;
 let code;
 let msg;
@@ -20,6 +17,11 @@ let msg;
 module.exports.handler = async (event) => {
   try {
     client = await snsClient();
+
+    params = { 
+        Message: "STRING_VALUE",
+        TopicArn: SNS_NAME
+      };
 
     data = await client.send(new PublishCommand(params));
 

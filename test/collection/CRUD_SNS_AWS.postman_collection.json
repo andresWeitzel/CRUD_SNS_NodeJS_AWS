@@ -7,10 +7,10 @@
 	},
 	"item": [
 		{
-			"name": "POST",
+			"name": "Subscribe",
 			"item": [
 				{
-					"name": "create-topic",
+					"name": "subscribe-topic",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {}
 					},
@@ -30,7 +30,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:4000/dev/create-manual-topic",
+							"raw": "http://localhost:4000/dev/subscribe-topic",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -38,12 +38,17 @@
 							"port": "4000",
 							"path": [
 								"dev",
-								"create-manual-topic"
+								"subscribe-topic"
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Publish",
+			"item": [
 				{
 					"name": "publish-topic",
 					"protocolProfileBehavior": {
@@ -82,8 +87,43 @@
 			]
 		},
 		{
-			"name": "GET",
+			"name": "Topic",
 			"item": [
+				{
+					"name": "create-topic",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "f98d8cd98h73s204e3456998ecl9427j",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bearer_token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/dev/create-manual-topic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"dev",
+								"create-manual-topic"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "list-topics",
 					"protocolProfileBehavior": {

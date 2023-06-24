@@ -23,7 +23,7 @@ plugins:
 
 functions:
   createManualTopic:
-    handler: src/lambdas/createManualTopic.handler
+    handler: src/lambdas/topic/createManualTopic.handler
     name: create-manual-topic-sns
     description: to create a manual topic
     events:
@@ -33,7 +33,7 @@ functions:
           private: true        
 
   listTopics:
-    handler: src/lambdas/listTopics.handler
+    handler: src/lambdas/topic/listTopics.handler
     name: list-topic-sns
     description: to list all topics
     events:
@@ -45,7 +45,7 @@ functions:
           arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}           
 
   publishTopic:
-      handler: src/lambdas/publishTopic.handler
+      handler: src/lambdas/publish/publishTopic.handler
       name: publish-topic-sns
       description: to publish a specific topic
       events:
@@ -55,6 +55,18 @@ functions:
             private: true
         - sns:
             arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}  
+
+  subscribeTopic:
+      handler: src/lambdas/subscribe/subscribeTopic.handler
+      name: subscribe-topic-sns
+      description: to subscribe a specific topic
+      events:
+        - http:
+            method: POST
+            path: subscribe-topic
+            private: true
+        - sns:
+            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}              
               
 
 custom:
