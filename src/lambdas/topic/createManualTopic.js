@@ -22,7 +22,7 @@ module.exports.handler = async (event) => {
       console.log(data);
       return await bodyResponse(statusCode.OK, data);
     } else {
-      return await bodyResponse(statusCode.OK, data);
+      return await bodyResponse(statusCode.BAD_REQUEST, 'Bad request, failed to create a manual topic');
     }
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;

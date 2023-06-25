@@ -13,32 +13,30 @@ let params;
 let data;
 let code;
 let msg;
+const ENDPOINT = `http://localhost:4000/dev/list-topics`;
 
 module.exports.handler = async (event) => {
   try {
     client = await snsClient();
 
-    // params = {
-    //     Protocol: "lambda",
-    //     //TopicArn: SNS_NAME,
-    //     TopicArn: "ss",
-    //     Endpoint: "listTopics"
-    //   };
-
     params = {
-        Protocol: "email",
-        //TopicArn: SNS_NAME,
-        TopicArn: "ss",
-        Endpoint: "andres96energy@gmail.com"
-      };  
+        Protocol: "lambda",
+        TopicArn: SNS_NAME,
+        //TopicArn: "ss",
+        Endpoint: ENDPOINT,
+        Attributes: {
+          Enabled: 'true'
+        }
+      };
 
     data = await client.send(new SubscribeCommand(params));
 
     if (data != null && data != undefined) {
       console.log(data);
       return await bodyResponse(statusCode.OK, data);
+  
     } else {
-      return await bodyResponse(statusCode.OK, data);
+      return await bodyResponse(statusCode.BAD_REQUEST, 'Bad request, failed to subscribe a topic');
     }
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;

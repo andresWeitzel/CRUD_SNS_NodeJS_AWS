@@ -1,6 +1,6 @@
 "use strict";
 //External
-const { PublishCommand } = require("@aws-sdk/client-sns");
+const { ListSubscriptionsByTopicCommand } = require("@aws-sdk/client-sns");
 //Helpers
 const { snsClient } = require("../../helpers/sns/config/snsClient");
 const { statusCode } = require("../../helpers/enums/http/statusCode");
@@ -18,22 +18,19 @@ module.exports.handler = async (event) => {
   try {
     client = await snsClient();
 
-    params = { 
-        Message: "STRING_VALUE",
-        TopicArn: SNS_NAME
-      };
+    params = { TopicArn: SNS_NAME };
 
-    data = await client.send(new PublishCommand(params));
+    data = await client.send(new ListSubscriptionsByTopicCommand(params));
 
     if (data != null && data != undefined) {
       console.log(data);
       return await bodyResponse(statusCode.OK, data);
     } else {
-      return await bodyResponse(statusCode.BAD_REQUEST, 'Bad request, failed to publish a topic');
+        return await bodyResponse(statusCode.BAD_REQUEST, 'Bad request, failed to list all subscriptions for a topic');
     }
   } catch (error) {
     code = statusCode.INTERNAL_SERVER_ERROR;
-    msg = `Error in PUBLISH TOPIC lambda. Caused by ${error}`;
+    msg = `Error in LIST SUBSCRIPTION/S BY TOPIC/S lambda. Caused by ${error}`;
     console.error(`${msg}. Stack error type : ${error.stack}`);
 
     return await bodyResponse(code, msg);

@@ -66,7 +66,19 @@ functions:
             path: subscribe-topic
             private: true
         - sns:
-            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}              
+            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN} 
+
+  listSubscriptionTopic:
+      handler: src/lambdas/subscribe/listSubscriptionTopic.handler
+      name: list-subscription-topic-sns
+      description: to list all subscription by a specific topic
+      events:
+        - http:
+            method: GET
+            path: list-subscription-topic
+            private: true
+        - sns:
+            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}                          
               
 
 custom:
@@ -86,6 +98,10 @@ custom:
 
 resources:
   Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: apiGatewayRestApi
     TopicExample:
       Type: AWS::SNS::Topic
       Properties:
