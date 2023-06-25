@@ -87,6 +87,7 @@ sls -v
 ```git
 npm i
 ```
+* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
 * El siguiente script configurado en el package.json del proyecto es el encargado de
    * Levantar serverless-offline (serverless-offline)
  ```git
@@ -185,6 +186,7 @@ npm i serverless --save-dev
 npm i @aws-sdk/client-sns --save-dev
 ```
 * Para la configuración de puertos, topics, etc, (de este plugin) dirigirse a la [página de serverless, sección plugins](https://www.serverless.com/plugins/serverless-offline-sns) y para los recursos SNS [página de serverless, sección eventos sns](https://www.serverless.com/framework/docs/providers/aws/events/sns/)
+* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
 * Instalamos la dependencia para la ejecución de scripts en paralelo
 ``` git
 npm i concurrently
