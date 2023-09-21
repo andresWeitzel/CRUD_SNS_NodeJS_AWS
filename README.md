@@ -1,3 +1,4 @@
+![Index app](./doc/assets/sns-example.png)
 # CRUD_SNS_NodeJS_AWS
 Modelo CRUD para la comunicación entre lambdas a través de amazon simple notification service (SNS) implementado con Systems Manager Parameter Store, Api-Gateway, Amazon SNS, Serverless-Framework, Lambda, NodeJs, aws sdk-v3, entre otros.
 
