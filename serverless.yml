@@ -1,4 +1,3 @@
-
 service: sns-nodejs-aws
 
 frameworkVersion: "3"
@@ -41,8 +40,6 @@ functions:
           method: GET
           path: list-topics
           private: true
-      - sns:
-          arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}           
 
   publishTopic:
       handler: src/lambdas/publish/publishTopic.handler
@@ -53,8 +50,6 @@ functions:
             method: POST
             path: publish-topic
             private: true
-        - sns:
-            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}  
 
   subscribeTopic:
       handler: src/lambdas/subscribe/subscribeTopic.handler
@@ -65,8 +60,6 @@ functions:
             method: POST
             path: subscribe-topic
             private: true
-        - sns:
-            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN} 
 
   listSubscriptionTopic:
       handler: src/lambdas/subscribe/listSubscriptionTopic.handler
@@ -77,9 +70,6 @@ functions:
             method: GET
             path: list-subscription-topic
             private: true
-        - sns:
-            arn: ${file(./serverless_ssm.yml):SNS_DEFAULT_ARN}                          
-              
 
 custom:
   serverless-offline:
