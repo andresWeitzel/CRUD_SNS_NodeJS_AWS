@@ -5,9 +5,12 @@ const { CreateTopicCommand } = require("@aws-sdk/client-sns");
 const { snsClient } = require("../../helpers/sns/config/snsClient");
 const { statusCode } = require("../../helpers/enums/http/statusCode");
 const { bodyResponse } = require("../../helpers/http/bodyResponse");
+const { addTopic } = require("./listTopics");
+//Environment vars
+const SNS_NAME = process.env.SNS_DEFAULT_NAME;
 //Const-vars
 let client;
-let params = { Name: "ManualTopic" };
+let params;
 let data;
 let code;
 let msg;
@@ -16,11 +19,33 @@ module.exports.handler = async (event) => {
   try {
     client = await snsClient();
 
+    // Obtener el nombre del tópico del body
+    const body = JSON.parse(event.body || '{}');
+    const topicName = body.name || SNS_NAME;
+
+    if (process.env.IS_OFFLINE) {
+      // En modo offline, agregamos el tópico al Map
+      addTopic(topicName);
+      const topicArn = `arn:aws:sns:us-east-1:123456789012:${topicName}`;
+      
+      console.log('Topic created (Offline):', { TopicArn: topicArn, TopicName: topicName });
+      return await bodyResponse(statusCode.OK, {
+        message: 'Topic created successfully (Offline)',
+        topicArn: topicArn,
+        topicName: topicName
+      });
+    }
+
+    params = { Name: topicName };
     data = await client.send(new CreateTopicCommand(params));
 
-    if (data != null && data != undefined) {
-      console.log(data);
-      return await bodyResponse(statusCode.OK, data);
+    if (data && data.TopicArn) {
+      console.log('Topic created:', data);
+      return await bodyResponse(statusCode.OK, {
+        message: 'Topic created successfully',
+        topicArn: data.TopicArn,
+        topicName: topicName
+      });
     } else {
       return await bodyResponse(statusCode.BAD_REQUEST, 'Bad request, failed to create a manual topic');
     }
