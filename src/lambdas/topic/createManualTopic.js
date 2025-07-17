@@ -23,16 +23,21 @@ module.exports.handler = async (event) => {
     const body = JSON.parse(event.body || '{}');
     const topicName = body.name || SNS_NAME;
 
+    console.log('Creating topic with name:', topicName);
+
     if (process.env.IS_OFFLINE) {
       // En modo offline, agregamos el tópico al Map
       addTopic(topicName);
       const topicArn = `arn:aws:sns:us-east-1:123456789012:${topicName}`;
       
       console.log('Topic created (Offline):', { TopicArn: topicArn, TopicName: topicName });
+      console.log('Topic added to Map successfully');
+      
       return await bodyResponse(statusCode.OK, {
         message: 'Topic created successfully (Offline)',
         topicArn: topicArn,
-        topicName: topicName
+        topicName: topicName,
+        note: 'Topic is now available in the list-topics endpoint'
       });
     }
 
