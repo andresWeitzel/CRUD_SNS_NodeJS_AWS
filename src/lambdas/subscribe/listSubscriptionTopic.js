@@ -36,10 +36,16 @@ module.exports.handler = async (event) => {
   try {
     client = await snsClient();
 
-    // Obtener el nombre del tópico de los query parameters o usar el por defecto
-    let topicName = SNS_NAME;
-    if (event.queryStringParameters && event.queryStringParameters.topicName) {
-      topicName = event.queryStringParameters.topicName;
+    // Obtener el nombre del tópico de los path parameters
+    let topicName = event.pathParameters?.topicName;
+    
+    // Validar que se proporcione el nombre del tópico
+    if (!topicName) {
+      return await bodyResponse(statusCode.BAD_REQUEST, {
+        message: 'Topic name is required in the URL path',
+        example: '/list-subscription-topic/{topicName}',
+        availableTopics: ['Topic1', 'Topic2', 'MiTópicoPrueba']
+      });
     }
 
     const topicArn = `arn:aws:sns:us-east-1:123456789012:${topicName}`;

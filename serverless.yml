@@ -108,7 +108,17 @@ functions:
       events:
         - http:
             method: GET
-            path: list-subscription-topic
+            path: list-subscription-topic/{topicName}
+            private: true
+
+  listAllSubscriptions:
+      handler: src/lambdas/subscribe/listAllSubscriptions.handler
+      name: list-all-subscriptions-sns
+      description: to list all subscriptions from all topics
+      events:
+        - http:
+            method: GET
+            path: list-all-subscriptions
             private: true
 
 custom:
