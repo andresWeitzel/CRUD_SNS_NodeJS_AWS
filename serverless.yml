@@ -41,6 +41,46 @@ functions:
           path: list-topics
           private: true
 
+  debugTopics:
+    handler: src/lambdas/topic/debugTopics.handler
+    name: debug-topics-sns
+    description: to debug topics map state (offline only)
+    events:
+      - http:
+          method: GET
+          path: debug-topics
+          private: true
+
+  debugSubscriptions:
+    handler: src/lambdas/subscribe/debugSubscriptions.handler
+    name: debug-subscriptions-sns
+    description: to debug subscriptions state (offline only)
+    events:
+      - http:
+          method: GET
+          path: debug-subscriptions
+          private: true
+
+  webhookReceiver:
+    handler: src/lambdas/webhook/webhookReceiver.handler
+    name: webhook-receiver-sns
+    description: to receive SNS notifications (offline only)
+    events:
+      - http:
+          method: POST
+          path: webhook/{topicName}
+          private: false
+
+  listNotifications:
+    handler: src/lambdas/webhook/listNotifications.handler
+    name: list-notifications-sns
+    description: to list received notifications (offline only)
+    events:
+      - http:
+          method: GET
+          path: list-notifications
+          private: true
+
   publishTopic:
       handler: src/lambdas/publish/publishTopic.handler
       name: publish-topic-sns
@@ -68,7 +108,17 @@ functions:
       events:
         - http:
             method: GET
-            path: list-subscription-topic
+            path: list-subscription-topic/{topicName}
+            private: true
+
+  listAllSubscriptions:
+      handler: src/lambdas/subscribe/listAllSubscriptions.handler
+      name: list-all-subscriptions-sns
+      description: to list all subscriptions from all topics
+      events:
+        - http:
+            method: GET
+            path: list-all-subscriptions
             private: true
 
 custom:

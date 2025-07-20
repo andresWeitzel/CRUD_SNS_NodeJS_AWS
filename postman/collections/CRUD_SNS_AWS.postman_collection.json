@@ -1,0 +1,983 @@
+{
+	"info": {
+		"_postman_id": "e3b81eb1-4282-4d98-8cf0-ffb60df28fcd",
+		"name": "CRUD_SNS_AWS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18757319"
+	},
+	"item": [
+		{
+			"name": "Subscribe",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "subscribe-topic",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"topicName\": \"Topic1\",\r\n  \"protocol\": \"http\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/dev/subscribe-topic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"subscribe-topic"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "subscribe-topic",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"topicName\": \"Topic1\",\r\n  \"protocol\": \"http\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4000/dev/subscribe-topic",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"subscribe-topic"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "content-length",
+											"value": "336"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:47:21 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Successfully subscribed to topic (Offline)\",\n        \"subscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n        \"topicName\": \"Topic1\",\n        \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n        \"protocol\": \"http\",\n        \"endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "list-webhook-subcription-topic",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/webhook/Topic1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"webhook",
+										"Topic1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "list-webhook-subcription-topic",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/webhook/Topic1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"webhook",
+												"Topic1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "content-length",
+											"value": "139"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:50:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Notification received successfully\",\n        \"topicName\": \"Topic1\",\n        \"messageId\": \"msg_1752972608517\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "list-subscription-topic",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/list-subscription-topic/Topic1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"list-subscription-topic",
+										"Topic1"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "list-subscription-topic",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/list-subscription-topic/Topic1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"list-subscription-topic",
+												"Topic1"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "vary",
+											"value": "accept-encoding"
+										},
+										{
+											"key": "content-encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:47:29 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Subscriptions retrieved successfully (Offline)\",\n        \"topicName\": \"Topic1\",\n        \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n        \"subscriptions\": [\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n            }\n        ],\n        \"totalSubscriptions\": 6\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "list-all-subscription-topic",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/list-all-subscriptions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"list-all-subscriptions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "list-all-subscription-topic",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/list-all-subscriptions",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"list-all-subscriptions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "vary",
+											"value": "accept-encoding"
+										},
+										{
+											"key": "content-encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:49:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"All subscriptions retrieved successfully\",\n        \"filters\": {\n            \"topicName\": \"none\",\n            \"protocol\": \"none\"\n        },\n        \"stats\": {\n            \"totalSubscriptions\": 6,\n            \"filteredSubscriptions\": 6,\n            \"totalTopics\": 2,\n            \"topicsWithSubscriptions\": 1,\n            \"protocolsUsed\": [\n                \"http\"\n            ],\n            \"subscriptionsByTopicCount\": {\n                \"Topic1\": 6\n            },\n            \"subscriptionsByProtocolCount\": {\n                \"http\": 6\n            }\n        },\n        \"subscriptions\": [\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n            }\n        ],\n        \"subscriptionsByTopic\": {\n            \"Topic1\": [\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n                }\n            ]\n        },\n        \"subscriptionsByProtocol\": {\n            \"http\": [\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n                }\n            ]\n        },\n        \"allTopics\": [\n            {\n                \"topicName\": \"Topic1\",\n                \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"subscriptionCount\": 6\n            },\n            {\n                \"topicName\": \"Topic2\",\n                \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic2\",\n                \"subscriptionCount\": 0\n            }\n        ],\n        \"fileInfo\": {\n            \"subscriptionsFile\": \"C:\\\\Users\\\\andre\\\\Desktop\\\\Programming\\\\Projects\\\\AWS\\\\Projects\\\\Nodejs\\\\Pending\\\\CRUD_SNS_NodeJS_AWS\\\\CRUD_SNS_NodeJS_AWS\\\\.serverless\\\\offline-subscriptions.json\",\n            \"subscriptionsFileExists\": true,\n            \"topicsFile\": \"C:\\\\Users\\\\andre\\\\Desktop\\\\Programming\\\\Projects\\\\AWS\\\\Projects\\\\Nodejs\\\\Pending\\\\CRUD_SNS_NodeJS_AWS\\\\CRUD_SNS_NodeJS_AWS\\\\.serverless\\\\offline-topics.json\",\n            \"topicsFileExists\": true\n        }\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "debug-subscriptions",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/debug-subscriptions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"debug-subscriptions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "list-all-subscription-topic",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/list-all-subscriptions",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"list-all-subscriptions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "vary",
+											"value": "accept-encoding"
+										},
+										{
+											"key": "content-encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:49:00 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"All subscriptions retrieved successfully\",\n        \"filters\": {\n            \"topicName\": \"none\",\n            \"protocol\": \"none\"\n        },\n        \"stats\": {\n            \"totalSubscriptions\": 6,\n            \"filteredSubscriptions\": 6,\n            \"totalTopics\": 2,\n            \"topicsWithSubscriptions\": 1,\n            \"protocolsUsed\": [\n                \"http\"\n            ],\n            \"subscriptionsByTopicCount\": {\n                \"Topic1\": 6\n            },\n            \"subscriptionsByProtocolCount\": {\n                \"http\": 6\n            }\n        },\n        \"subscriptions\": [\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n            },\n            {\n                \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"Protocol\": \"http\",\n                \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                \"Attributes\": {\n                    \"Enabled\": \"true\"\n                },\n                \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n            }\n        ],\n        \"subscriptionsByTopic\": {\n            \"Topic1\": [\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n                }\n            ]\n        },\n        \"subscriptionsByProtocol\": {\n            \"http\": [\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:05:12.193Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675461576\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4567/topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:41.576Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675478617\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:17:58.617Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752675706278\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-16T14:21:46.278Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752970979728\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:22:59.728Z\"\n                },\n                {\n                    \"SubscriptionArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1:1752972441606\",\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"Protocol\": \"http\",\n                    \"Endpoint\": \"http://127.0.0.1:4000/dev/webhook/Topic1\",\n                    \"Attributes\": {\n                        \"Enabled\": \"true\"\n                    },\n                    \"createdAt\": \"2025-07-20T00:47:21.606Z\"\n                }\n            ]\n        },\n        \"allTopics\": [\n            {\n                \"topicName\": \"Topic1\",\n                \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"subscriptionCount\": 6\n            },\n            {\n                \"topicName\": \"Topic2\",\n                \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic2\",\n                \"subscriptionCount\": 0\n            }\n        ],\n        \"fileInfo\": {\n            \"subscriptionsFile\": \"C:\\\\Users\\\\andre\\\\Desktop\\\\Programming\\\\Projects\\\\AWS\\\\Projects\\\\Nodejs\\\\Pending\\\\CRUD_SNS_NodeJS_AWS\\\\CRUD_SNS_NodeJS_AWS\\\\.serverless\\\\offline-subscriptions.json\",\n            \"subscriptionsFileExists\": true,\n            \"topicsFile\": \"C:\\\\Users\\\\andre\\\\Desktop\\\\Programming\\\\Projects\\\\AWS\\\\Projects\\\\Nodejs\\\\Pending\\\\CRUD_SNS_NodeJS_AWS\\\\CRUD_SNS_NodeJS_AWS\\\\.serverless\\\\offline-topics.json\",\n            \"topicsFileExists\": true\n        }\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Publish",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "publish-topic",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"topicName\": \"Topic1\",\r\n  \"message\": \"Topic1 test\",\r\n  \"subject\": \"message test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/dev/publish-topic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"publish-topic"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "publish-topic",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"topicName\": \"Topic1\",\r\n  \"message\": \"Topic1 test\",\r\n  \"subject\": \"message test\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:4000/dev/publish-topic",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"publish-topic"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "content-length",
+											"value": "340"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:18:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Message published successfully (Offline)\",\n        \"messageId\": \"msg_1752970728605_a9x9nw34w\",\n        \"topicName\": \"Topic1\",\n        \"topicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n        \"deliveredToSubscriptions\": 4,\n        \"note\": \"Notifications were simulated. Check webhook endpoint for actual delivery.\"\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Topic",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "create-manual-topic",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"Topic1\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/dev/create-manual-topic",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"create-manual-topic"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "list-topics",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/list-topics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"list-topics"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "list-topics",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/list-topics",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"list-topics"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "content-length",
+											"value": "347"
+										},
+										{
+											"key": "accept-ranges",
+											"value": "bytes"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:01:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Topics retrieved successfully (Offline)\",\n        \"topics\": [\n            {\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                \"TopicName\": \"Topic1\"\n            },\n            {\n                \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic2\",\n                \"TopicName\": \"Topic2\"\n            }\n        ],\n        \"totalTopics\": 2\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "debug-topics",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "f98d8cd98h73s204e3456998ecl9427j",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/dev/debug-topics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"dev",
+										"debug-topics"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "debug-topics",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-api-key",
+												"value": "f98d8cd98h73s204e3456998ecl9427j",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{bearer_token}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "http://localhost:4000/dev/debug-topics",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "4000",
+											"path": [
+												"dev",
+												"debug-topics"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "cache-control",
+											"value": "no-cache"
+										},
+										{
+											"key": "vary",
+											"value": "accept-encoding"
+										},
+										{
+											"key": "content-encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 20 Jul 2025 00:07:13 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": {\n        \"message\": \"Debug information retrieved successfully\",\n        \"debug\": {\n            \"topicsCount\": 2,\n            \"topics\": [\n                {\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic1\",\n                    \"TopicName\": \"Topic1\"\n                },\n                {\n                    \"TopicArn\": \"arn:aws:sns:us-east-1:123456789012:Topic2\",\n                    \"TopicName\": \"Topic2\"\n                }\n            ],\n            \"topicNames\": [\n                \"Topic1\",\n                \"Topic2\"\n            ],\n            \"filePath\": \"C:\\\\Users\\\\andre\\\\Desktop\\\\Programming\\\\Projects\\\\AWS\\\\Projects\\\\Nodejs\\\\Pending\\\\CRUD_SNS_NodeJS_AWS\\\\CRUD_SNS_NodeJS_AWS\\\\.serverless\\\\offline-topics.json\",\n            \"fileExists\": true\n        },\n        \"fileInfo\": {\n            \"content\": \"[\\n  {\\n    \\\"TopicArn\\\": \\\"arn:aws:sns:us-east-1:123456789012:Topic1\\\",\\n    \\\"TopicName\\\": \\\"Topic1\\\"\\n  },\\n  {\\n    \\\"TopicArn\\\": \\\"arn:aws:sns:us-east-1:123456789012:Topic2\\\",\\n    \\\"TopicName\\\": \\\"Topic2\\\"\\n  }\\n]\",\n            \"stats\": {\n                \"size\": 194,\n                \"created\": \"2025-07-16T13:41:02.274Z\",\n                \"modified\": \"2025-07-20T00:00:51.594Z\"\n            }\n        },\n        \"timestamp\": \"2025-07-20T00:07:13.596Z\"\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000/dev"
+		},
+		{
+			"key": "x-api-key",
+			"value": "f98d8cd98h73s204e3456998ecl9427j"
+		},
+		{
+			"key": "bearer_token",
+			"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+		}
+	]
+}

@@ -21,10 +21,9 @@ Modelo CRUD para la comunicación entre lambdas a través de amazon simple notif
  - [1.2) Configurar el proyecto serverless desde cero](#12-configurar-el-proyecto-serverless-desde-cero-)
  - [1.3) Tecnologías.](#13-tecnologías-)
 
-### Sección 2) Endpoints y Ejemplos 
+### Sección 2) Endpoints y Recursos
  
  - [2.0) EndPoints y recursos.](#20-endpoints-y-recursos-)
- - [2.1) Ejemplos](#21-ejemplos-)
 
 ### Sección 3) Prueba de funcionalidad y Referencias
  
@@ -60,8 +59,29 @@ Características principales:
 - Soporte para desarrollo local con serverless-offline
 - Manejo de eventos SNS y HTTP
 - Implementación de patrones de diseño para mensajería asíncrona
+- **Sistema de Webhooks**: Endpoints para recibir notificaciones SNS en modo offline
+- **Persistencia de Datos**: Almacenamiento en archivos JSON para tópicos, suscripciones y notificaciones
+- **Endpoints de Debug**: Herramientas para troubleshooting y monitoreo del estado del sistema
+  - `/debug-topics`: Estado completo de tópicos con estadísticas de archivos
+  - `/debug-subscriptions`: Estado completo de suscripciones con agrupación por tópico
+  - `/list-notifications`: Notificaciones recibidas con filtrado y agrupación
+- **Gestión de Tópicos**: Endpoints para crear y listar tópicos
+  - `/create-manual-topic`: Crear nuevos tópicos SNS
+  - `/list-topics`: Listar todos los tópicos disponibles
+  - `/debug-topics`: Debug completo del estado de tópicos
+- **Gestión de Suscripciones**: Endpoints para suscribirse y listar suscripciones
+  - `/subscribe-topic`: Suscribirse a un tópico específico
+  - `/list-all-subscriptions`: Todas las suscripciones con filtrado y estadísticas
+  - `/list-subscription-topic/{topicName}`: Suscripciones de un tópico específico
+- **Publicación de Mensajes**: Endpoints para publicar mensajes
+  - `/publish-topic`: Publicar mensajes en un tópico específico
+- **Webhooks y Notificaciones**: Endpoints para recibir y listar notificaciones
+  - `/webhook/{topicName}`: Recibir notificaciones SNS (modo offline)
+- **Validaciones Mejoradas**: Verificación de existencia de tópicos y validación de parámetros
+- **Simulación Realista**: Comportamiento más cercano al SNS real con persistencia entre reinicios
+- **Manejo de Errores Mejorado**: Mensajes más descriptivos y listado de recursos disponibles
 
-<br>
+
 
 <br>
 
@@ -80,11 +100,16 @@ El sistema está compuesto por los siguientes componentes principales:
    - **Gestión de Tópicos**
      - `createManualTopic`: Crea nuevos tópicos SNS
      - `listTopics`: Lista todos los tópicos disponibles
+     - `debugTopics`: Debug completo del estado de tópicos (modo offline)
    - **Publicación**
      - `publishTopic`: Publica mensajes en tópicos específicos
    - **Suscripciones**
      - `subscribeTopic`: Gestiona suscripciones a tópicos
      - `listSubscriptionTopic`: Lista suscripciones por tópico
+     - `debugSubscriptions`: Debug completo del estado de suscripciones (modo offline)
+   - **Webhooks y Notificaciones**
+     - `webhookReceiver`: Recibe notificaciones SNS (modo offline)
+     - `listNotifications`: Lista notificaciones recibidas con filtrado
 
 3. **Amazon SNS**
    - Servicio de mensajería pub/sub
@@ -107,24 +132,13 @@ El sistema está compuesto por los siguientes componentes principales:
 #### Pasos del Flujo
 1. **Crear Tópico** → Obtener TopicArn
 2. **Listar Tópicos** → Verificar creación
-3. **Suscribirse** → Obtener SubscriptionArn
-4. **Publicar Mensaje** → Enviar mensaje al tópico
-5. **Listar Suscripciones** → Verificar suscripciones
-
-1. **Creación de Tópicos**
-   ```
-   Cliente -> API Gateway -> Lambda -> SNS -> Tópico Creado
-   ```
-
-2. **Publicación de Mensajes**
-   ```
-   Cliente -> API Gateway -> Lambda -> SNS -> Suscriptores
-   ```
-
-3. **Suscripción a Tópicos**
-   ```
-   Cliente -> API Gateway -> Lambda -> SNS -> Confirmación
-   ```
+3. **Debug de Tópicos** → Verificar estado completo (opcional)
+4. **Suscribirse** → Obtener SubscriptionArn
+5. **Debug de Suscripciones** → Verificar estado completo (opcional)
+6. **Publicar Mensaje** → Enviar mensaje al tópico
+7. **Recibir Notificación** → Webhook procesa la notificación
+8. **Listar Notificaciones** → Verificar notificaciones recibidas
+9. **Listar Suscripciones** → Verificar suscripciones
 
 #### Configuración Local
 
@@ -133,6 +147,14 @@ El proyecto incluye configuración para desarrollo local:
 - SNS Offline para simular Amazon SNS
 - SSM Offline para simular Parameter Store
 - Puertos configurables para cada servicio
+
+#### Sistema de Debugging y Monitoreo
+
+El proyecto incluye endpoints especializados para debugging en modo offline:
+- **Debug de Tópicos**: `/debug-topics` - Estado completo de tópicos con estadísticas
+- **Debug de Suscripciones**: `/debug-subscriptions` - Estado completo de suscripciones con agrupación
+- **Persistencia de Datos**: Archivos JSON para mantener estado entre reinicios
+- **Webhooks Automáticos**: Endpoints para recibir notificaciones SNS simuladas
 
 #### Seguridad
 
@@ -148,6 +170,14 @@ El proyecto incluye configuración para desarrollo local:
 - Región: us-east-1
 - Memoria Lambda: 512MB
 - Timeout: 10 segundos
+
+#### Herramientas de Desarrollo
+
+- **Endpoints de Debug**: Disponibles solo en modo offline para troubleshooting
+- **Persistencia Local**: Archivos JSON en `.serverless/` para mantener estado
+- **Simulación Realista**: Comportamiento similar al SNS real
+- **Validaciones Mejoradas**: Verificación de existencia de recursos
+- **Manejo de Errores**: Mensajes descriptivos y debugging facilitado
 
 <br>
 
@@ -382,67 +412,131 @@ npm start
 
 El proyecto implementa un CRUD completo para Amazon SNS con los siguientes endpoints:
 
+#### **Endpoints Principales (CRUD)**
+
 | **Endpoint** | **Método** | **Descripción** | **Autenticación** |
 |-------------|------------|----------------|------------------|
 | `/create-manual-topic` | POST | Crea un nuevo tópico SNS | Requiere API Key |
 | `/list-topics` | GET | Lista todos los tópicos SNS disponibles | Requiere API Key |
 | `/publish-topic` | POST | Publica un mensaje en un tópico específico | Requiere API Key |
 | `/subscribe-topic` | POST | Suscribe un endpoint a un tópico específico | Requiere API Key |
-| `/list-subscription-topic` | GET | Lista todas las suscripciones de un tópico específico | Requiere API Key |
+| `/list-subscription-topic/{topicName}` | GET | Lista todas las suscripciones de un tópico específico | Requiere API Key |
+| `/list-all-subscriptions` | GET | Lista todas las suscripciones de todos los tópicos | Requiere API Key |
+
+#### **Endpoints de Webhook y Notificaciones**
+
+| **Endpoint** | **Método** | **Descripción** | **Autenticación** |
+|-------------|------------|----------------|------------------|
+| `/webhook/{topicName}` | POST | Recibe notificaciones SNS (modo offline) | Público |
+| `/list-notifications` | GET | Lista todas las notificaciones recibidas | Requiere API Key |
+
+#### **Endpoints de Debugging y Monitoreo**
+
+| **Endpoint** | **Método** | **Descripción** | **Autenticación** |
+|-------------|------------|----------------|------------------|
+| `/debug-topics` | GET | Debug completo del estado de tópicos | Requiere API Key |
+| `/debug-subscriptions` | GET | Debug completo del estado de suscripciones | Requiere API Key |
 
 ### 2.0.1) Detalles de Implementación
 
-#### Flujo de Implementación
+#### Flujo de Implementación Mejorado
 ![Flujo de Implementación SNS](./doc/assets/sns-flow.png)
 
-#### Pasos del Flujo
-1. **Crear Tópico** → Obtener TopicArn
-2. **Listar Tópicos** → Verificar creación
-3. **Suscribirse** → Obtener SubscriptionArn
-4. **Publicar Mensaje** → Enviar mensaje al tópico
-5. **Listar Suscripciones** → Verificar suscripciones
+#### Pasos del Flujo Actualizado
+1. **Crear Tópico** → Persistir en archivo JSON
+2. **Listar Tópicos** → Leer desde archivo JSON
+3. **Suscribirse** → Validar tópico + guardar suscripción
+4. **Publicar Mensaje** → Simular envío a suscriptores
+5. **Recibir Notificación** → Webhook guarda en archivo
+6. **Listar Notificaciones** → Leer desde archivo JSON
 
 #### Create Manual Topic
 - **Endpoint**: POST `/create-manual-topic`
-- **Descripción**: Crea un nuevo tópico SNS
+- **Descripción**: Crea un nuevo tópico SNS con persistencia
 - **Handler**: `src/lambdas/topic/createManualTopic.handler`
-- **Función Lambda**: `create-manual-topic-sns`
+- **Funcionalidad**:
+  - Guarda tópico en archivo JSON
+  - Valida nombre del tópico
+  - Retorna ARN simulado
 
-#### List Topics
+#### List Topics 
 - **Endpoint**: GET `/list-topics`
-- **Descripción**: Obtiene la lista de todos los tópicos SNS
+- **Descripción**: Lista tópicos desde archivo JSON
 - **Handler**: `src/lambdas/topic/listTopics.handler`
-- **Función Lambda**: `list-topic-sns`
-- **Eventos**: 
-  - HTTP GET
-  - SNS (ARN configurado en SSM)
+- **Funcionalidad**:
+  - Lee desde archivo persistente
+  - No incluye tópicos de ejemplo automáticamente
+  - Muestra solo tópicos creados por el usuario
 
-#### Publish Topic
+#### Publish Topic 
 - **Endpoint**: POST `/publish-topic`
-- **Descripción**: Publica un mensaje en un tópico específico
+- **Descripción**: Publica mensaje con validación de tópico
 - **Handler**: `src/lambdas/publish/publishTopic.handler`
-- **Función Lambda**: `publish-topic-sns`
-- **Eventos**:
-  - HTTP POST
-  - SNS (ARN configurado en SSM)
+- **Funcionalidad**:
+  - Valida que el tópico existe
+  - Simula envío a suscriptores
+  - Retorna información de delivery
 
-#### Subscribe Topic
+#### Subscribe Topic 
 - **Endpoint**: POST `/subscribe-topic`
-- **Descripción**: Suscribe un endpoint a un tópico específico
+- **Descripción**: Suscribe con validación y webhook automático
 - **Handler**: `src/lambdas/subscribe/subscribeTopic.handler`
-- **Función Lambda**: `subscribe-topic-sns`
-- **Eventos**:
-  - HTTP POST
-  - SNS (ARN configurado en SSM)
+- **Funcionalidad**:
+  - Valida existencia del tópico
+  - Usa webhook automático: `http://127.0.0.1:4000/dev/webhook/{topicName}`
+  - Guarda suscripción en archivo JSON
 
 #### List Subscription Topic
-- **Endpoint**: GET `/list-subscription-topic`
-- **Descripción**: Lista todas las suscripciones de un tópico específico
+- **Endpoint**: GET `/list-subscription-topic/{topicName}`
+- **Descripción**: Lista suscripciones de un tópico específico
 - **Handler**: `src/lambdas/subscribe/listSubscriptionTopic.handler`
-- **Función Lambda**: `list-subscription-topic-sns`
-- **Eventos**:
-  - HTTP GET
-  - SNS (ARN configurado en SSM)
+- **Características**:
+  - **Path Parameter**: El nombre del tópico se especifica en la URL
+  - **Validación**: Verifica que el topicName esté presente en la URL
+  - **Persistencia**: Lee suscripciones desde archivo JSON
+  - **Información Detallada**: Muestra datos completos de cada suscripción
+  - **Conteo**: Proporciona el total de suscripciones del tópico
+
+#### List All Subscriptions
+- **Endpoint**: GET `/list-all-subscriptions`
+- **Descripción**: Lista todas las suscripciones de todos los tópicos
+- **Handler**: `src/lambdas/subscribe/listAllSubscriptions.handler`
+- **Funcionalidad**:
+  - Lista todas las suscripciones del sistema
+  - Filtrado opcional por tópico: `?topicName=X`
+  - Filtrado opcional por protocolo: `?protocol=Y`
+  - Filtrado combinado: `?topicName=X&protocol=Y`
+  - Agrupación por tópico y protocolo
+  - Estadísticas detalladas del sistema
+  - Información de archivos de persistencia
+
+#### Webhook Receiver
+- **Endpoint**: POST `/webhook/{topicName}`
+- **Descripción**: Recibe notificaciones SNS
+- **Handler**: `src/lambdas/webhook/webhookReceiver.handler`
+- **Funcionalidad**:
+  - Recibe notificaciones HTTP
+  - Guarda en archivo JSON
+  - Responde 200 OK para evitar reintentos
+
+#### List Notifications 
+- **Endpoint**: GET `/list-notifications`
+- **Descripción**: Lista notificaciones recibidas
+- **Handler**: `src/lambdas/webhook/listNotifications.handler`
+- **Funcionalidad**:
+  - Filtrado por tópico
+  - Agrupación por tópico
+  - Información detallada de cada notificación
+
+#### Debug Endpoints 
+- **Endpoints**: `/debug-topics`, `/debug-subscriptions`, `/list-all-subscriptions`, `/list-notifications`
+- **Descripción**: Herramientas de debugging y monitoreo
+- **Características**:
+  - Estado actual del sistema
+  - Información detallada de archivos
+  - Estadísticas de uso
+  - Filtrado y agrupación de datos
+  - Solo disponible en modo offline
 
 ### 2.0.2) Configuración de Seguridad
 
@@ -450,163 +544,9 @@ Todos los endpoints están protegidos con API Key. La configuración se realiza 
 - API Gateway con clave API (`xApiKey`)
 - Variables de entorno gestionadas por SSM Parameter Store
 
-### 2.0.3) Recursos SNS
-
-El proyecto incluye un tópico SNS de ejemplo configurado en los recursos:
-```yaml
-TopicExample:
-  Type: AWS::SNS::Topic
-  Properties:
-    TopicName: TopicExample
-```
-
 </details>
 
 
-
-### 2.1) Ejemplos [🔝](#índice-)
-
-<details>
-  <summary>Ver</summary>
-
-<br>
-
-### 2.1.0) Configuración del Entorno de Pruebas
-
-1. **Variables de Entorno en Postman**
-   | **Variable** | **Valor** | **Descripción** |
-   |-------------|-----------|----------------|
-   | `base_url` | `http://localhost:4000/dev` | URL base para las peticiones |
-   | `x-api-key` | `f98d8cd98h73s204e3456998ecl9427j` | API Key para autenticación |
-
-2. **Headers Necesarios**
-   ```json
-   {
-     "x-api-key": "{{x-api-key}}",
-     "Content-Type": "application/json"
-   }
-   ```
-
-### 2.1.1) Ejemplos de Uso
-
-#### 1. Crear un Tópico
-- **Endpoint**: `POST {{base_url}}/create-manual-topic`
-- **Body**:
-  ```json
-  {
-    "name": "MiTópicoPrueba"
-  }
-  ```
-- **Respuesta Esperada**:
-  ```json
-  {
-    "statusCode": 200,
-    "body": {
-      "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba"
-    }
-  }
-  ```
-
-#### 2. Listar Tópicos
-- **Endpoint**: `GET {{base_url}}/list-topics`
-- **Respuesta Esperada**:
-  ```json
-  {
-    "statusCode": 200,
-    "body": {
-      "Topics": [
-        {
-          "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba"
-        }
-      ]
-    }
-  }
-  ```
-
-#### 3. Suscribirse a un Tópico
-- **Endpoint**: `POST {{base_url}}/subscribe-topic`
-- **Body**:
-  ```json
-  {
-    "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
-    "protocol": "email",
-    "endpoint": "usuario@ejemplo.com"
-  }
-  ```
-- **Respuesta Esperada**:
-  ```json
-  {
-    "statusCode": 200,
-    "body": {
-      "SubscriptionArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba:1234567890"
-    }
-  }
-  ```
-
-#### 4. Publicar Mensaje
-- **Endpoint**: `POST {{base_url}}/publish-topic`
-- **Body**:
-  ```json
-  {
-    "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
-    "message": "Este es un mensaje de prueba",
-    "subject": "Asunto de Prueba"
-  }
-  ```
-- **Respuesta Esperada**:
-  ```json
-  {
-    "statusCode": 200,
-    "body": {
-      "MessageId": "1234567890"
-    }
-  }
-  ```
-
-#### 5. Listar Suscripciones
-- **Endpoint**: `GET {{base_url}}/list-subscription-topic`
-- **Query Params**: `?topicArn=arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba`
-- **Respuesta Esperada**:
-  ```json
-  {
-    "statusCode": 200,
-    "body": {
-      "Subscriptions": [
-        {
-          "SubscriptionArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba:1234567890",
-          "Protocol": "email",
-          "Endpoint": "usuario@ejemplo.com"
-        }
-      ]
-    }
-  }
-  ```
-
-
-<br>
-
-### 2.1.3) Notas Importantes
-
-1. **Desarrollo Local**
-   - Asegúrate de que el servidor local esté corriendo (`npm start`)
-   - Verifica que los puertos configurados estén disponibles
-   - Los mensajes SNS se simularán localmente
-
-2. **Manejo de Errores**
-   - Códigos de error comunes:
-     - 400: Bad Request (datos inválidos)
-     - 401: Unauthorized (API Key inválida)
-     - 404: Not Found (recurso no encontrado)
-     - 500: Internal Server Error
-
-3. **Limitaciones en Desarrollo Local**
-   - Las suscripciones por email no envían correos reales
-   - Los ARNs son simulados
-   - Las confirmaciones de suscripción deben ser manejadas manualmente
-
-<br>
-
-</details>
 
 
 
@@ -621,6 +561,627 @@ TopicExample:
 
 <br>
 
+### 3.0.0) Configuración del Entorno de Pruebas
+
+1. **Variables de Entorno en Postman**
+   | **Variable** | **Valor** | **Descripción** |
+   |-------------|-----------|----------------|
+   | `base_url` | `http://localhost:4000/dev` | URL base para las peticiones |
+   | `x-api-key` | `f98d8cd98h73s204e3456998ecl9427j` | API Key para autenticación |
+   | `bearer_token` | `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c` | Token Bearer para autenticación |
+
+2. **Headers Necesarios**
+   ```json
+   {
+     "x-api-key": "{{x-api-key}}",
+     "Authorization": "{{bearer_token}}",
+     "Content-Type": "application/json"
+   }
+   ```
+
+### 3.0.1) Ejemplos de Uso
+
+#### 1. Crear un Tópico
+
+##### Request (POST)
+
+```postman
+curl --location 'http://localhost:4000/dev/create-manual-topic' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "MiTópicoPrueba"
+}'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Topic created successfully (Offline)",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+        "topicName": "MiTópicoPrueba",
+        "note": "Topic is now available in the list-topics endpoint"
+    }
+}
+```
+
+##### Response (400 Bad Request)
+
+```json
+{
+    "statusCode": 400,
+    "body": "Bad request, check request body attributes. Missing or incorrect"
+}
+```
+
+##### Response (401 Unauthorized)
+
+```json
+{
+    "statusCode": 401,
+    "body": "Not authenticated, check x_api_key"
+}
+```
+
+<br>
+
+#### 2. Listar Tópicos
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/list-topics' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Topics retrieved successfully (Offline)",
+        "topics": [
+            {
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+                "TopicName": "MiTópicoPrueba"
+            }
+        ],
+        "totalTopics": 1
+    }
+}
+```
+
+##### Response (401 Unauthorized)
+
+```json
+{
+    "statusCode": 401,
+    "body": "Not authenticated, check x_api_key"
+}
+```
+
+<br>
+
+#### 3. Debug de Tópicos
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/debug-topics' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Debug information retrieved successfully",
+        "stats": {
+            "totalTopics": 2,
+            "fileExists": true,
+            "fileSize": "1.2 KB",
+            "lastModified": "2025-07-16T14:05:12.193Z"
+        },
+        "topics": [
+            {
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+                "TopicName": "MiTópicoPrueba",
+                "createdAt": "2025-07-16T14:05:12.193Z"
+            },
+            {
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:OtroTópico",
+                "TopicName": "OtroTópico",
+                "createdAt": "2025-07-16T14:05:12.200Z"
+            }
+        ],
+        "fileInfo": {
+            "filePath": "/path/to/.serverless/offline-topics.json",
+            "fileExists": true,
+            "fileSize": "1.2 KB",
+            "lastModified": "2025-07-16T14:05:12.193Z"
+        }
+    }
+}
+```
+
+##### Response (401 Unauthorized)
+
+```json
+{
+    "statusCode": 401,
+    "body": "Not authenticated, check x_api_key"
+}
+```
+
+<br>
+
+#### 4. Suscribirse a un Tópico
+
+##### Request (POST)
+
+```postman
+curl --location 'http://localhost:4000/dev/subscribe-topic' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--data '{
+    "topicName": "MiTópicoPrueba",
+    "protocol": "http",
+    "endpoint": "http://127.0.0.1:4000/dev/webhook/MiTópicoPrueba"
+}'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Successfully subscribed to topic (Offline)",
+        "subscriptionArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba:1752674712193",
+        "topicName": "MiTópicoPrueba",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+        "protocol": "http",
+        "endpoint": "http://127.0.0.1:4000/dev/webhook/MiTópicoPrueba"
+    }
+}
+```
+
+##### Response (400 Bad Request - Topic Not Found)
+
+```json
+{
+    "statusCode": 400,
+    "body": {
+        "message": "Topic does not exist",
+        "requestedTopic": "TópicoInexistente",
+        "availableTopics": ["MiTópicoPrueba", "OtroTópico"]
+    }
+}
+```
+
+##### Response (400 Bad Request - Missing Parameters)
+
+```json
+{
+    "statusCode": 400,
+    "body": "Bad request, check request body attributes. Missing or incorrect"
+}
+```
+
+<br>
+
+#### 5. Webhook Receiver
+
+##### Request (POST)
+
+```postman
+curl --location 'http://localhost:4000/dev/webhook/Topic1' \
+--header 'Content-Type: application/json' \
+--data '{
+    "Type": "Notification",
+    "MessageId": "msg_1752674712193_abc123def",
+    "TopicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
+    "Message": "Este es un mensaje de prueba",
+    "Subject": "Asunto de Prueba",
+    "Timestamp": "2025-07-16T14:05:12.193Z",
+    "SignatureVersion": "1",
+    "Signature": "example-signature",
+    "SigningCertURL": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-0000000000000000000000.pem"
+}'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Notification received successfully",
+        "topicName": "Topic1",
+        "messageId": "msg_1752674712193_abc123def",
+        "receivedAt": "2025-07-16T14:05:12.200Z"
+    }
+}
+```
+
+##### Response (400 Bad Request)
+
+```json
+{
+    "statusCode": 400,
+    "body": "Invalid notification format"
+}
+```
+
+<br>
+
+#### 6. Listar Todas las Suscripciones
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/list-all-subscriptions' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "All subscriptions retrieved successfully",
+        "filters": {
+            "topicName": "none",
+            "protocol": "none"
+        },
+        "stats": {
+            "totalSubscriptions": 3,
+            "filteredSubscriptions": 3,
+            "totalTopics": 2,
+            "topicsWithSubscriptions": 2,
+            "protocolsUsed": ["http"],
+            "subscriptionsByTopicCount": {
+                "Topic1": 2,
+                "Topic2": 1
+            },
+            "subscriptionsByProtocolCount": {
+                "http": 3
+            }
+        },
+        "subscriptions": [...],
+        "subscriptionsByTopic": {...},
+        "subscriptionsByProtocol": {...},
+        "allTopics": [...]
+    }
+}
+```
+
+<br>
+
+#### 7. Listar Suscripciones de un Tópico Específico
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/list-subscription-topic/Topic1' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Subscriptions retrieved successfully (Offline)",
+        "topicName": "Topic1",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
+        "subscriptions": [
+            {
+                "SubscriptionArn": "arn:aws:sns:us-east-1:123456789012:Topic1:1752674712193",
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
+                "Protocol": "http",
+                "Endpoint": "http://127.0.0.1:4000/dev/webhook/Topic1",
+                "Attributes": {
+                    "Enabled": "true"
+                },
+                "createdAt": "2025-07-16T14:05:12.193Z"
+            }
+        ],
+        "totalSubscriptions": 1
+    }
+}
+```
+
+<br>
+
+#### 8. Debug de Suscripciones
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/debug-subscriptions' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Debug information retrieved successfully",
+        "stats": {
+            "totalSubscriptions": 3,
+            "totalTopics": 2,
+            "fileExists": true,
+            "fileSize": "2.1 KB",
+            "lastModified": "2025-07-16T14:05:12.193Z"
+        },
+        "subscriptions": [...],
+        "topics": [...],
+        "subscriptionsByTopic": {
+            "Topic1": [...],
+            "Topic2": [...]
+        },
+        "fileInfo": {
+            "filePath": "/path/to/.serverless/offline-subscriptions.json",
+            "fileExists": true,
+            "fileSize": "2.1 KB",
+            "lastModified": "2025-07-16T14:05:12.193Z"
+        }
+    }
+}
+```
+
+<br>
+
+#### 9. Publicar Mensaje
+
+##### Request (POST)
+
+```postman
+curl --location 'http://localhost:4000/dev/publish-topic' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
+--header 'Content-Type: application/json' \
+--data '{
+    "topicName": "MiTópicoPrueba",
+    "message": "Este es un mensaje de prueba",
+    "subject": "Asunto de Prueba"
+}'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Message published successfully (Offline)",
+        "messageId": "msg_1752674712193_abc123def",
+        "topicName": "MiTópicoPrueba",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+        "deliveredToSubscriptions": 1,
+        "note": "Notifications were simulated. Check webhook endpoint for actual delivery."
+    }
+}
+```
+
+##### Response (400 Bad Request - Topic Not Found)
+
+```json
+{
+    "statusCode": 400,
+    "body": {
+        "message": "Topic does not exist",
+        "requestedTopic": "TópicoInexistente",
+        "availableTopics": ["MiTópicoPrueba", "OtroTópico"]
+    }
+}
+```
+
+<br>
+
+#### 10. Listar Notificaciones Recibidas
+
+##### Request (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/list-notifications' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Request con Filtro por Tópico (GET)
+
+```postman
+curl --location 'http://localhost:4000/dev/list-notifications?topicName=Topic1' \
+--header 'x-api-key: f98d8cd98h73s204e3456998ecl9427j' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+```
+
+##### Response (200 OK)
+
+```json
+{
+    "statusCode": 200,
+    "body": {
+        "message": "Notifications retrieved successfully",
+        "filters": {
+            "topicName": "none"
+        },
+        "stats": {
+            "totalNotifications": 3,
+            "filteredNotifications": 3,
+            "topicsWithNotifications": 2
+        },
+        "notifications": [
+            {
+                "id": "notif_1752674712193_abc123",
+                "topicName": "Topic1",
+                "topicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
+                "message": "Este es un mensaje de prueba",
+                "subject": "Asunto de Prueba",
+                "messageId": "msg_1752674712193_abc123def",
+                "timestamp": "2025-07-16T14:05:12.193Z",
+                "receivedAt": "2025-07-16T14:05:12.200Z"
+            }
+        ],
+        "notificationsByTopic": {...}
+    }
+}
+```
+
+<br>
+
+### 3.0.2) Información de Debugging
+
+#### 📊 **Información que proporcionan los endpoints de debug**
+
+##### **`/debug-topics`**
+- Número total de tópicos
+- Lista completa de tópicos con ARNs
+- Nombres de tópicos disponibles
+- Ruta del archivo de persistencia
+- Estado del archivo (existe/no existe)
+- Contenido del archivo JSON
+- Estadísticas del archivo (tamaño, fechas)
+
+##### **`/debug-subscriptions`**
+- Número total de suscripciones
+- Número total de tópicos
+- Lista completa de suscripciones
+- Lista completa de tópicos
+- Agrupación de suscripciones por tópico
+- Nombres de tópicos disponibles
+- Información de archivos de persistencia
+- Estadísticas detalladas
+
+#### 🔧 **Troubleshooting con Debug Endpoints**
+
+##### **Problema: "Topic does not exist"**
+```bash
+# Verificar qué tópicos están disponibles
+curl -X GET "http://localhost:4000/dev/debug-topics" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+```
+
+##### **Problema: Suscripción no funciona**
+```bash
+# Verificar estado de suscripciones
+curl -X GET "http://localhost:4000/dev/debug-subscriptions" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+
+# Ver todas las suscripciones
+curl -X GET "http://localhost:4000/dev/list-all-subscriptions" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+
+# Ver suscripciones de un tópico específico
+curl -X GET "http://localhost:4000/dev/list-subscription-topic/Topic1" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+```
+
+##### **Problema: No se reciben notificaciones**
+```bash
+# Verificar notificaciones recibidas
+curl -X GET "http://localhost:4000/dev/list-notifications" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+```
+
+##### **Problema: Datos se pierden al reiniciar**
+```bash
+# Verificar persistencia de archivos
+curl -X GET "http://localhost:4000/dev/debug-topics" \
+  -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
+```
+
+#### 📋 **Flujo de Debugging Recomendado**
+
+1. **Crear tópico** → Verificar con `/debug-topics`
+2. **Suscribirse** → Verificar con `/debug-subscriptions` o `/list-all-subscriptions`
+3. **Publicar mensaje** → Verificar con `/list-notifications`
+4. **Si hay problemas** → Usar endpoints de debug para diagnosticar
+   - **Suscripciones**: `/list-all-subscriptions` o `/list-subscription-topic/{topicName}`
+   - **Tópicos**: `/debug-topics`
+   - **Notificaciones**: `/list-notifications`
+
+#### ⚠️ **Limitaciones de los Endpoints de Debug**
+
+- **Solo modo offline**: No funcionan en producción
+- **Requieren API Key**: Necesitan autenticación
+- **Solo para desarrollo**: No usar en producción
+- **Información sensible**: Pueden mostrar rutas de archivos
+
+### 3.0.3) Notas Importantes
+
+1. **Desarrollo Local Mejorado**
+   - Asegúrate de que el servidor local esté corriendo (`npm start`)
+   - Verifica que los puertos configurados estén disponibles
+   - Los mensajes SNS se simulan localmente con persistencia en archivos JSON
+   - Los datos persisten entre reinicios del servidor
+
+2. **Sistema de Webhooks**
+   - Los webhooks automáticos usan: `http://127.0.0.1:4000/dev/webhook/{topicName}`
+   - Las notificaciones se guardan en `.serverless/offline-notifications.json`
+   - Puedes ver las notificaciones recibidas con `/list-notifications`
+
+3. **Persistencia de Datos**
+   - Tópicos: `.serverless/offline-topics.json`
+   - Suscripciones: `.serverless/offline-subscriptions.json`
+   - Notificaciones: `.serverless/offline-notifications.json`
+   - Los archivos se crean automáticamente al usar los endpoints
+
+4. **Endpoints de Debug y Monitoreo**
+   - `/debug-topics`: Estado completo de tópicos con estadísticas
+   - `/debug-subscriptions`: Estado completo de suscripciones con agrupación
+   - `/list-all-subscriptions`: Todas las suscripciones con filtrado y estadísticas
+   - `/list-subscription-topic`: Suscripciones de un tópico específico
+   - `/list-notifications`: Notificaciones recibidas con filtrado
+   - Solo disponibles en modo offline
+   - Útiles para troubleshooting y monitoreo
+
+5. **Manejo de Errores Mejorado**
+   - Códigos de error comunes:
+     - 400: Bad Request (datos inválidos, tópico no existe)
+     - 401: Unauthorized (API Key inválida)
+     - 404: Not Found (recurso no encontrado)
+     - 500: Internal Server Error
+   - Mensajes de error más descriptivos
+   - Lista de tópicos disponibles en errores
+
+6. **Validaciones**
+   - Verificación de existencia de tópicos antes de suscribirse
+   - Validación de parámetros de entrada
+   - Prevención de tópicos duplicados
+
+7. **Flujo de Trabajo Recomendado**
+   1. Crear tópico con `/create-manual-topic`
+   2. Verificar con `/list-topics` o `/debug-topics`
+   3. Suscribirse con `/subscribe-topic`
+   4. Verificar suscripción con `/list-subscription-topic/{topicName}` o `/list-all-subscriptions`
+   5. Publicar mensaje con `/publish-topic`
+   6. Ver notificaciones con `/list-notifications`
+
+8. **Limitaciones en Desarrollo Local**
+   - Las suscripciones por email no envían correos reales
+   - Los ARNs son simulados pero consistentes
+   - Las notificaciones se simulan pero se guardan para debugging
+   - Los webhooks HTTP funcionan completamente
 
 <br>
 
