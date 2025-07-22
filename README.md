@@ -1,221 +1,249 @@
 ![Index app](./doc/assets/sns-example.png)
-# CRUD_SNS_NodeJS_AWS
-Modelo CRUD para la comunicación entre lambdas a través de amazon simple notification service (SNS) implementado con Systems Manager Parameter Store, Api-Gateway, Amazon SNS, Serverless-Framework, Lambda, NodeJs, aws sdk-v3, entre otros.
-
-* [Playlist proyecto](https://www.youtube.com/watch?v=sGK_4FQBdP8&list=PLCl11UFjHurCkJNddrHBJ_TUfMlrHuWyb)
-
+<div align="right">
+  <img width="25" height="25" src="./doc/assets/icons/devops/png/aws.png" />
+  <img width="25" height="25" src="./doc/assets/icons/aws/png/lambda.png" />
+  <img width="27" height="27" src="./doc/assets/icons/devops/png/postman.png" />
+  <img width="29" height="27" src="./doc/assets/icons/devops/png/git.png" />
+  <img width="28" height="27" src="./doc/assets/icons/aws/png/api-gateway.png" />
+  <img width="23" height="25" src="./doc/assets/icons/aws/png/sqs.png" />
+  <img width="27" height="25" src="./doc/assets/icons/aws/png/parameter-store.png" />
+  <img width="27" height="27" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
+</div>
 
 <br>
 
-## Índice 📜
+<br>
+
+<div align="right"> 
+  <a href="./translations/README.es.md">
+    <img src="./doc/assets/translation/arg-flag.jpg" width="65" height="40" />
+  </a> 
+  <a href="./README.md">
+    <img src="./doc/assets/translation/eeuu-flag.jpg" width="65" height="40" />
+  </a> 
+</div>
+
+<br>
+
+<div align="center">
+
+# CRUD SNS Nodejs AWS ![(status-completed)](./doc/assets/icons/badges/status-completed.svg)
+
+</div>  
+
+Serverless CRUD for Amazon SNS with Node.js and Serverless Framework. Allows you to create, list, publish, and subscribe to SNS topics, with API Key authentication, local persistence in JSON files, debugging endpoints, and webhook simulation. Includes integration with SSM Parameter Store and support for local development with serverless-offline.
+
+*   [Postman Collection](./postman/collections/CRUD_SNS_AWS.postman_collection.json)   
+*   [Playlist functionality test](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO" target="_blank"> <img src="./doc/assets/social-networks/yt.png" width="25" /> </a>
+
+<br>
+
+## Index 📜
 
 <details>
- <summary> Ver </summary>
+ <summary> View </summary>
  
  <br>
  
-### Sección 1) Descripción, Tecnologías y Referencias
+### Section 1) Description, Technologies and References
 
- - [1.0) Descripción del Proyecto.](#10-descripción-)
- - [1.1) Ejecución del Proyecto.](#11-ejecución-del-proyecto-)
- - [1.2) Configurar el proyecto serverless desde cero](#12-configurar-el-proyecto-serverless-desde-cero-)
- - [1.3) Tecnologías.](#13-tecnologías-)
+ - [1.0) Project Description.](#10-project-description-)
+ - [1.1) Project Execution.](#11-project-execution-)
+ - [1.2) Configure the serverless project from scratch](#12-configure-the-serverless-project-from-scratch-)
+ - [1.3) Technologies.](#13-technologies-)
 
-### Sección 2) Endpoints y Recursos
+### Section 2) Endpoints and Resources
  
- - [2.0) EndPoints y recursos.](#20-endpoints-y-recursos-)
+ - [2.0) EndPoints and resources.](#20-endpoints-and-resources-)
 
-### Sección 3) Prueba de funcionalidad y Referencias
+### Section 3) Functionality Testing and References
  
- - [3.0) Prueba de funcionalidad.](#30-prueba-de-funcionalidad-)
- - [3.1) Referencias.](#31-referencias-)
+ - [3.0) Functionality testing.](#30-functionality-testing-)
+ - [3.1) References.](#31-references-)
 
 <br>
 
 </details>
 
-
 <br>
 
-## Sección 1) Descripción, Tecnologías y Dependencias 
+## Section 1) Description, Technologies and Dependencies 
 
 
-### 1.0) Descripción [🔝](#índice-) 
+### 1.0) Description [🔝](#index-) 
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
  
  <br>
 
-### 1.0.0) Descripción General
+### 1.0.0) General Description
 
-Este proyecto implementa un sistema CRUD completo para Amazon Simple Notification Service (SNS) utilizando Node.js y el Serverless Framework. El sistema permite la gestión completa de tópicos SNS, incluyendo su creación, listado, publicación de mensajes y gestión de suscripciones.
+This project implements a complete CRUD system for Amazon Simple Notification Service (SNS) using Node.js and the Serverless Framework. The system allows you to manage SNS topics, including their creation, listing, message publishing, and subscription management.
 
-Características principales:
-- Implementación de arquitectura serverless utilizando AWS Lambda
-- Integración con Amazon SNS para mensajería pub/sub
-- API RESTful protegida con API Key
-- Gestión de configuración mediante SSM Parameter Store
-- Soporte para desarrollo local con serverless-offline
-- Manejo de eventos SNS y HTTP
-- Implementación de patrones de diseño para mensajería asíncrona
-- **Sistema de Webhooks**: Endpoints para recibir notificaciones SNS en modo offline
-- **Persistencia de Datos**: Almacenamiento en archivos JSON para tópicos, suscripciones y notificaciones
-- **Endpoints de Debug**: Herramientas para troubleshooting y monitoreo del estado del sistema
-  - `/debug-topics`: Estado completo de tópicos con estadísticas de archivos
-  - `/debug-subscriptions`: Estado completo de suscripciones con agrupación por tópico
-  - `/list-notifications`: Notificaciones recibidas con filtrado y agrupación
-- **Gestión de Tópicos**: Endpoints para crear y listar tópicos
-  - `/create-manual-topic`: Crear nuevos tópicos SNS
-  - `/list-topics`: Listar todos los tópicos disponibles
-  - `/debug-topics`: Debug completo del estado de tópicos
-- **Gestión de Suscripciones**: Endpoints para suscribirse y listar suscripciones
-  - `/subscribe-topic`: Suscribirse a un tópico específico
-  - `/list-all-subscriptions`: Todas las suscripciones con filtrado y estadísticas
-  - `/list-subscription-topic/{topicName}`: Suscripciones de un tópico específico
-- **Publicación de Mensajes**: Endpoints para publicar mensajes
-  - `/publish-topic`: Publicar mensajes en un tópico específico
-- **Webhooks y Notificaciones**: Endpoints para recibir y listar notificaciones
-  - `/webhook/{topicName}`: Recibir notificaciones SNS (modo offline)
-- **Validaciones Mejoradas**: Verificación de existencia de tópicos y validación de parámetros
-- **Simulación Realista**: Comportamiento más cercano al SNS real con persistencia entre reinicios
-- **Manejo de Errores Mejorado**: Mensajes más descriptivos y listado de recursos disponibles
+Key features:
+- Implementation of a serverless architecture using AWS Lambda
+- Integration with Amazon SNS for pub/sub messaging
+- RESTful API protected with API Key
+- Configuration management via SSM Parameter Store
+- Support for local development with serverless-offline
+- Handling of SNS events and HTTP
+- Implementation of design patterns for asynchronous messaging
+- **Webhooks System**: Endpoints to receive SNS notifications in offline mode
+- **Data Persistence**: Storage in JSON files for topics, subscriptions, and notifications
+- **Debugging Endpoints**: Tools for troubleshooting and monitoring system status
+  - `/debug-topics`: Full state of topics with file statistics
+  - `/debug-subscriptions`: Full state of subscriptions with grouping by topic
+  - `/list-notifications`: Received notifications with filtering and grouping
+- **Topic Management**: Endpoints to create and list topics
+  - `/create-manual-topic`: Create new SNS topics
+  - `/list-topics`: List all available topics
+  - `/debug-topics`: Full debug state of topics
+- **Subscription Management**: Endpoints to subscribe and list subscriptions
+  - `/subscribe-topic`: Subscribe to a specific topic
+  - `/list-all-subscriptions`: All subscriptions with filtering and statistics
+  - `/list-subscription-topic/{topicName}`: Subscriptions for a specific topic
+- **Message Publishing**: Endpoints to publish messages
+  - `/publish-topic`: Publish messages to a specific topic
+- **Webhooks and Notifications**: Endpoints to receive and list notifications
+  - `/webhook/{topicName}`: Receive SNS notifications (offline mode)
+- **Enhanced Validations**: Topic existence check and parameter validation
+- **Realistic Simulation**: Behavior closer to the real SNS with persistence between restarts
+- **Improved Error Handling**: More descriptive messages and available resources list
 
 
 
 <br>
 
-### 1.0.1) Descripción Arquitectura y Funcionamiento
+### 1.0.1) Architecture and Operation
 
-#### Arquitectura del Sistema
+#### System Architecture
 
-El sistema está compuesto por los siguientes componentes principales:
+The system consists of the following main components:
 
 1. **API Gateway**
-   - Punto de entrada para todas las peticiones HTTP
-   - Implementa autenticación mediante API Key
-   - Enruta las peticiones a las funciones Lambda correspondientes
+   - Entry point for all HTTP requests
+   - Implements authentication via API Key
+   - Routes requests to corresponding Lambda functions
 
-2. **Funciones Lambda**
-   - **Gestión de Tópicos**
-     - `createManualTopic`: Crea nuevos tópicos SNS
-     - `listTopics`: Lista todos los tópicos disponibles
-     - `debugTopics`: Debug completo del estado de tópicos (modo offline)
-   - **Publicación**
-     - `publishTopic`: Publica mensajes en tópicos específicos
-   - **Suscripciones**
-     - `subscribeTopic`: Gestiona suscripciones a tópicos
-     - `listSubscriptionTopic`: Lista suscripciones por tópico
-     - `debugSubscriptions`: Debug completo del estado de suscripciones (modo offline)
-   - **Webhooks y Notificaciones**
-     - `webhookReceiver`: Recibe notificaciones SNS (modo offline)
-     - `listNotifications`: Lista notificaciones recibidas con filtrado
+2. **Lambda Functions**
+   - **Topic Management**
+     - `createManualTopic`: Creates new SNS topics
+     - `listTopics`: Lists all available topics
+     - `debugTopics`: Full debug state of topics (offline mode)
+   - **Publication**
+     - `publishTopic`: Publishes messages to specific topics
+   - **Subscriptions**
+     - `subscribeTopic`: Manages subscriptions to topics
+     - `listSubscriptionTopic`: Lists subscriptions by topic
+     - `debugSubscriptions`: Full debug state of subscriptions (offline mode)
+   - **Webhooks and Notifications**
+     - `webhookReceiver`: Receives SNS notifications (offline mode)
+     - `listNotifications`: Lists received notifications with filtering
 
 3. **Amazon SNS**
-   - Servicio de mensajería pub/sub
-   - Gestiona tópicos y suscripciones
-   - Distribuye mensajes a los suscriptores
+   - Pub/sub messaging service
+   - Manages topics and subscriptions
+   - Distributes messages to subscribers
 
 4. **SSM Parameter Store**
-   - Almacena configuración sensible
-   - Gestiona variables de entorno
-   - Configuración de endpoints y credenciales
+   - Stores sensitive configuration
+   - Manages environment variables
+   - Endpoint and credential configuration
 
 <br>
 
 <br>
 
-#### Flujo de Datos e Implementación
+#### Data Flow and Implementation
 
-![Flujo de Implementación SNS](./doc/assets/sns-flow.png)
+#### Flow Steps
+1. **Create Topic** → Get TopicArn
+2. **List Topics** → Verify creation
+3. **Debug Topics** → Verify full state (optional)
+4. **Subscribe** → Get SubscriptionArn
+5. **Debug Subscriptions** → Verify full state (optional)
+6. **Publish Message** → Send message to topic
+7. **Receive Notification** → Webhook processes the notification
+8. **List Notifications** → Verify received notifications
+9. **List Subscriptions** → Verify subscriptions
 
-#### Pasos del Flujo
-1. **Crear Tópico** → Obtener TopicArn
-2. **Listar Tópicos** → Verificar creación
-3. **Debug de Tópicos** → Verificar estado completo (opcional)
-4. **Suscribirse** → Obtener SubscriptionArn
-5. **Debug de Suscripciones** → Verificar estado completo (opcional)
-6. **Publicar Mensaje** → Enviar mensaje al tópico
-7. **Recibir Notificación** → Webhook procesa la notificación
-8. **Listar Notificaciones** → Verificar notificaciones recibidas
-9. **Listar Suscripciones** → Verificar suscripciones
+#### Local Configuration
 
-#### Configuración Local
+The project includes configuration for local development:
+- Serverless Offline to simulate AWS Lambda
+- SNS Offline to simulate Amazon SNS
+- SSM Offline to simulate Parameter Store
+- Configurable ports for each service
 
-El proyecto incluye configuración para desarrollo local:
-- Serverless Offline para simular AWS Lambda
-- SNS Offline para simular Amazon SNS
-- SSM Offline para simular Parameter Store
-- Puertos configurables para cada servicio
+#### System Debugging and Monitoring
 
-#### Sistema de Debugging y Monitoreo
+The project includes specialized endpoints for debugging in offline mode:
+- **Debug Topics**: `/debug-topics` - Full state of topics with statistics
+- **Debug Subscriptions**: `/debug-subscriptions` - Full state of subscriptions with grouping
+- **Data Persistence**: JSON files to maintain state between restarts
+- **Automatic Webhooks**: Endpoints to receive simulated SNS notifications
 
-El proyecto incluye endpoints especializados para debugging en modo offline:
-- **Debug de Tópicos**: `/debug-topics` - Estado completo de tópicos con estadísticas
-- **Debug de Suscripciones**: `/debug-subscriptions` - Estado completo de suscripciones con agrupación
-- **Persistencia de Datos**: Archivos JSON para mantener estado entre reinicios
-- **Webhooks Automáticos**: Endpoints para recibir notificaciones SNS simuladas
+#### Security
 
-#### Seguridad
+- Authentication via API Key
+- Environment variables managed by SSM
+- Secure AWS credentials
+- Protected endpoints in API Gateway
 
-- Autenticación mediante API Key
-- Variables de entorno gestionadas por SSM
-- Credenciales AWS configuradas de forma segura
-- Endpoints protegidos en API Gateway
-
-#### Desarrollo y Despliegue
+#### Development and Deployment
 
 - Framework: Serverless v3
 - Runtime: Node.js 18.x
-- Región: us-east-1
-- Memoria Lambda: 512MB
-- Timeout: 10 segundos
+- Region: us-east-1
+- Lambda Memory: 512MB
+- Timeout: 10 seconds
 
-#### Herramientas de Desarrollo
+#### Development Tools
 
-- **Endpoints de Debug**: Disponibles solo en modo offline para troubleshooting
-- **Persistencia Local**: Archivos JSON en `.serverless/` para mantener estado
-- **Simulación Realista**: Comportamiento similar al SNS real
-- **Validaciones Mejoradas**: Verificación de existencia de recursos
-- **Manejo de Errores**: Mensajes descriptivos y debugging facilitado
+- **Debugging Endpoints**: Only available in offline mode for troubleshooting
+- **Local Persistence**: JSON files in `.serverless/` to maintain state
+- **Realistic Simulation**: Similar behavior to the real SNS
+- **Enhanced Validations**: Resource existence check
+- **Error Handling**: More descriptive messages and facilitated debugging
 
 <br>
 
 </details>
 
 
-### 1.1) Ejecución del Proyecto [🔝](#índice-)
+### 1.1) Project Execution [🔝](#index-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
 
-* Creamos un entorno de trabajo a través de algún ide, podemos o no crear una carpeta raíz para el proyecto, nos posicionamos sobre la misma
+* We create a working environment through some ide, we can or cannot create a root folder for the project, we position ourselves on it
 ```git
 cd 'projectRootName'
 ```
-* Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
+* Once a working environment is created through some ide, we clone the project
 ```git
 git clone https://github.com/andresWeitzel/SNS_NodeJS_AWS
 ```
-* Nos posicionamos sobre el proyecto
+* We position ourselves on the project
 ```git
 cd 'projectName'
 ```
-* Instalamos la versión LTS de [Nodejs(v18)](https://nodejs.org/en/download)
-* Instalamos el Serverless Framework globalmente si aún no lo hemos hecho. Recomiendo la version tres ya que es gratuita y no nos pide credenciales. Se puede usar la última version (cuatro) sin problemas, aunque es de pago.
+* We install the LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+* We install the Serverless Framework globally if we haven't done it yet. I recommend version three as it's free and doesn't require credentials. You can use the latest version (four) without problems, although it's paid.
 ```git
 npm install -g serverless@3
 ```
-* Verificamos la versión de Serverless instalada
+* We verify the Serverless version installed
 ```git
 sls -v
 ```
-* Instalamos todos los paquetes necesarios
+* We install all necessary packages
 ```git
 npm i
 ```
-* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
-* El siguiente script configurado en el package.json del proyecto es el encargado de
+* The ssm variables used in the project are kept to simplify the configuration process of the same. It is recommended to add the corresponding file (serverless_ssm.yml) to the .gitignore.
+* The following script configured in the project's package.json is responsible for
    * Levantar serverless-offline (serverless-offline)
  ```git
   "scripts": {
@@ -223,11 +251,11 @@ npm i
     "start": "npm run serverless-offline"
   },
 ```
-* Ejecutamos la app desde terminal.
+* We execute the app from the terminal.
 ```git
 npm start
 ```
-* Si se presenta algún mensaje indicando qué el puerto 4567 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
+* If a message indicating that port 4567 is already in use is presented, we can terminate all dependent processes and re-execute the app
 ```git
 npx kill-port 4567
 npm start
@@ -238,87 +266,87 @@ npm start
 
 </details>
 
-### 1.2) Configurar el proyecto serverless desde cero [🔝](#índice-)
+### 1.2) Configure the serverless project from scratch [🔝](#index-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
  
  <br>
  
-* Creamos un entorno de trabajo a través de algún ide, podemos o no crear una carpeta raíz para el proyecto, nos posicionamos sobre la misma
+* We create a working environment through some ide, we can or no create a root folder for the project, we position ourselves on it
 ```git
 cd 'projectRootName'
 ```
-* Una vez creado un entorno de trabajo a través de algún ide, clonamos el proyecto
+* Once a working environment is created through some ide, we clone the project
 ```git
 git clone https://github.com/andresWeitzel/SNS_NodeJS_AWS
 ```
-* Nos posicionamos sobre el proyecto
+* We position ourselves on the project
 ```git
 cd 'projectName'
 ```
-* Instalamos la última versión LTS de [Nodejs(v18)](https://nodejs.org/en/download)
-* Instalamos Serverless Framework de forma global si es que aún no lo hemos realizado
+* We install the latest LTS version of [Nodejs(v18)](https://nodejs.org/en/download)
+* We install Serverless Framework globally if it hasn't been done yet
 ```git
 npm install -g serverless
 ```
-* Verificamos la versión de Serverless instalada
+* We verify the Serverless version installed
 ```git
 sls -v
 ```
-* Inicializamos un template de serverles
+* We initialize a serverles template
 ```git
 serverless create --template aws-nodejs
 ```
-* Inicializamos un proyecto npm
+* We initialize an npm project
 ```git
 npm init -y
 ```
-* Instalamos serverless offline
+* We install serverless offline
 ```git
 npm i serverless-offline --save-dev
 ```
-* Agregamos el plugin al .yml
+* We add the plugin to the .yml
 ```git
 plugins:
   - serverless-offline
 ```
-* Instalamos serverless ssm
+* We install serverless ssm
 ```git
 npm i serverless-offline-ssm --save-dev
 ```
-* Agregamos el plugin al .yml
+* We add the plugin to the .yml
 ```git
 plugins:
   - serverless-offline-ssm
   - serverless-offline
 ```
-* Instalamos serverless sns
+* We install serverless sns
 ```git
 npm i serverless-offline-sns --save-dev
 ```
-* Agregamos el plugin al .yml
+* We add the plugin to the .yml
 ```git
 plugins:
   - serverless-offline-sns
   - serverless-offline-ssm
   - serverless-offline
 ```
-* Instalamos serverless, este deberá ser necesario para el uso de SNS
+* We install serverless, this should be necessary for SNS use
 ```git
 npm i serverless --save-dev
 ```
-* Instalamos el plugin para el uso de sns (aws-sdk-v3)
+* We install the plugin for sns use (aws-sdk-v3)
 ```git
 npm i @aws-sdk/client-sns --save-dev
 ```
-* Para la configuración de puertos, topics, etc, (de este plugin) dirigirse a la [página de serverless, sección plugins](https://www.serverless.com/plugins/serverless-offline-sns) y para los recursos SNS [página de serverless, sección eventos sns](https://www.serverless.com/framework/docs/providers/aws/events/sns/)
-* Las variables ssm utilizadas en el proyecto se mantienen para simplificar el proceso de configuración del mismo. Es recomendado agregar el archivo correspondiente (serverless_ssm.yml) al .gitignore.
-* Instalamos la dependencia para la ejecución de scripts en paralelo
+* For port configuration, topics, etc., (of this plugin) refer to the [serverless, plugins section](https://www.serverless.com/plugins/serverless-offline-sns) and for SNS resources [serverless, sns events section](https://www.serverless.com/framework/docs/providers/aws/events/sns/)
+* The ssm variables used in the project are kept to simplify the configuration process of the same. It is recommended to add the corresponding file (serverless_ssm.yml) to the .gitignore.
+* We install the dependency for parallel script execution
 ``` git
 npm i concurrently
 ``` 
-* El siguiente script configurado en el package.json del proyecto es el encargado de
+* The following script configured in the project's package.json is responsible for
    * Levantar serverless-offline (serverless-offline)
  ```git
   "scripts": {
@@ -326,53 +354,53 @@ npm i concurrently
     "start": "npm run serverless-offline"
   },
 ```
-* Ejecutamos la app desde terminal.
+* We execute the app from the terminal.
 ```git
 npm start
 ```
-* Si se presenta algún mensaje indicando qué el puerto 4567 ya está en uso, podemos terminar todos los procesos dependientes y volver a ejecutar la app
+* If a message indicating that port 4567 is already in use is presented, we can terminate all dependent processes and re-execute the app
 ```git
 npx kill-port 4567
 npm start
 ```
-* `Importante: ` Esta es una configuración inicial, se omiten pasos para simplificar la documentación. Para más información al respecto, dirigirse a la [página oficial de serverless, sección plugins](https://www.serverless.com/plugins)
+* `Important: ` This is an initial configuration, steps for simplification are omitted. For more information, refer to the [official serverless, plugins page](https://www.serverless.com/plugins)
 
 
 </details>
 
 
-### 1.3) Tecnologías [🔝](#índice-) 
+### 1.3) Technologies [🔝](#index-) 
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
  
  <br>
  
-### Tecnologías Implementadas
+### Implemented Technologies
 
-| **Tecnologías** | **Versión** | **Finalidad** |               
+| **Technologies** | **Version** | **Purpose** |               
 | ------------- | ------------- | ------------- |
-| [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Inyección Automática de Módulos para Lambdas |
-| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core Servicios AWS |
-| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Librerías para la Definición Modular |
-| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Manejo de Variables de Entorno |
-| [Amazon Simple Queue Service (SQS)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) | 7.0 | Servicio de colas de mensajes distribuidos | 
-| [Elastic MQ](https://github.com/softwaremill/elasticmq) | 1.3 | Interfaz compatible con SQS (msg memory) | 
-| [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | Gestor, Autenticación, Control y Procesamiento de la Api | 
-| [NodeJS](https://nodejs.org/en/) | 14.18.1  | Librería JS |
+| [SDK](https://www.serverless.com/framework/docs/guides/sdk/) | 4.3.2  | Automatic Module Injection for Lambdas |
+| [Serverless Framework Core v3](https://www.serverless.com//blog/serverless-framework-v3-is-live) | 3.23.0 | Core AWS Services |
+| [Serverless Plugin](https://www.serverless.com/plugins/) | 6.2.2  | Modular Definition Libraries |
+| [Systems Manager Parameter Store (SSM)](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) | 3.0 | Environment Variable Management |
+| [Amazon Simple Queue Service (SQS)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) | 7.0 | Distributed Message Queue Service | 
+| [Elastic MQ](https://github.com/softwaremill/elasticmq) | 1.3 | Compatible Interface with SQS (msg memory) | 
+| [Amazon Api Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html) | 2.0 | API Manager, Authentication, Control, and Processing | 
+| [NodeJS](https://nodejs.org/en/) | 14.18.1  | JS Library |
 | [VSC](https://code.visualstudio.com/docs) | 1.72.2  | IDE |
-| [Postman](https://www.postman.com/downloads/) | 10.11  | Cliente Http |
-| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | Símbolo del Sistema para linea de comandos | 
-| [Git](https://git-scm.com/downloads) | 2.29.1  | Control de Versiones |
+| [Postman](https://www.postman.com/downloads/) | 10.11  | HTTP Client |
+| [CMD](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd) | 10 | System Symbol for Command Line | 
+| [Git](https://git-scm.com/downloads) | 2.29.1  | Version Control |
 
 
 
 </br>
 
 
-### Plugins Implementados.
+### Implemented Plugins.
 
-| **Plugin** | **Descarga** |               
+| **Plugin** | **Download** |               
 | -------------  | ------------- |
 | serverless-offline |  https://www.serverless.com/plugins/serverless-offline |
 | serverless-offline-ssm |  https://www.npmjs.com/package/serverless-offline-ssm |
@@ -381,9 +409,9 @@ npm start
 
 </br>
 
-### Extensiones VSC Implementados.
+### VSC Extensions Implemented.
 
-| **Extensión** |              
+| **Extension** |              
 | -------------  | 
 | Prettier - Code formatter |
 | YAML - Autoformatter .yml (alt+shift+f) |
@@ -398,179 +426,173 @@ npm start
 
 
 
-## Sección 2) Endpoints y Ejemplos. 
+## Section 2) Endpoints and Examples. 
 
 
-### 2.0) Endpoints y recursos [🔝](#índice-)
+### 2.0) Endpoints and resources [🔝](#index-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
 
 <br>
 
-### 2.0.0) Descripción de Endpoints
+### 2.0.0) Description of Endpoints
 
-El proyecto implementa un CRUD completo para Amazon SNS con los siguientes endpoints:
+The project implements a complete CRUD for Amazon SNS with the following endpoints:
 
-#### **Endpoints Principales (CRUD)**
+#### **Main Endpoints (CRUD)**
 
-| **Endpoint** | **Método** | **Descripción** | **Autenticación** |
+| **Endpoint** | **Method** | **Description** | **Authentication** |
 |-------------|------------|----------------|------------------|
-| `/create-manual-topic` | POST | Crea un nuevo tópico SNS | Requiere API Key |
-| `/list-topics` | GET | Lista todos los tópicos SNS disponibles | Requiere API Key |
-| `/publish-topic` | POST | Publica un mensaje en un tópico específico | Requiere API Key |
-| `/subscribe-topic` | POST | Suscribe un endpoint a un tópico específico | Requiere API Key |
-| `/list-subscription-topic/{topicName}` | GET | Lista todas las suscripciones de un tópico específico | Requiere API Key |
-| `/list-all-subscriptions` | GET | Lista todas las suscripciones de todos los tópicos | Requiere API Key |
+| `/create-manual-topic` | POST | Creates a new SNS topic | Requires API Key |
+| `/list-topics` | GET | Lists all available SNS topics | Requires API Key |
+| `/publish-topic` | POST | Publishes a message to a specific topic | Requires API Key |
+| `/subscribe-topic` | POST | Subscribes an endpoint to a specific topic | Requires API Key |
+| `/list-subscription-topic/{topicName}` | GET | Lists all subscriptions for a specific topic | Requires API Key |
+| `/list-all-subscriptions` | GET | Lists all subscriptions for all topics | Requires API Key |
 
-#### **Endpoints de Webhook y Notificaciones**
+#### **Webhook and Notification Endpoints**
 
-| **Endpoint** | **Método** | **Descripción** | **Autenticación** |
+| **Endpoint** | **Method** | **Description** | **Authentication** |
 |-------------|------------|----------------|------------------|
-| `/webhook/{topicName}` | POST | Recibe notificaciones SNS (modo offline) | Público |
-| `/list-notifications` | GET | Lista todas las notificaciones recibidas | Requiere API Key |
+| `/webhook/{topicName}` | POST | Receives SNS notifications (offline mode) | Public |
+| `/list-notifications` | GET | Lists all received notifications | Requires API Key |
 
-#### **Endpoints de Debugging y Monitoreo**
+#### **Debugging and Monitoring Endpoints**
 
-| **Endpoint** | **Método** | **Descripción** | **Autenticación** |
+| **Endpoint** | **Method** | **Description** | **Authentication** |
 |-------------|------------|----------------|------------------|
-| `/debug-topics` | GET | Debug completo del estado de tópicos | Requiere API Key |
-| `/debug-subscriptions` | GET | Debug completo del estado de suscripciones | Requiere API Key |
+| `/debug-topics` | GET | Full debug state of topics | Requires API Key |
+| `/debug-subscriptions` | GET | Full debug state of subscriptions | Requires API Key |
 
-### 2.0.1) Detalles de Implementación
-
-#### Flujo de Implementación Mejorado
-![Flujo de Implementación SNS](./doc/assets/sns-flow.png)
-
-#### Pasos del Flujo Actualizado
-1. **Crear Tópico** → Persistir en archivo JSON
-2. **Listar Tópicos** → Leer desde archivo JSON
-3. **Suscribirse** → Validar tópico + guardar suscripción
-4. **Publicar Mensaje** → Simular envío a suscriptores
-5. **Recibir Notificación** → Webhook guarda en archivo
-6. **Listar Notificaciones** → Leer desde archivo JSON
+### 2.0.1) Implementation Details
 
 #### Create Manual Topic
 - **Endpoint**: POST `/create-manual-topic`
-- **Descripción**: Crea un nuevo tópico SNS con persistencia
+- **Description**: Creates a new SNS topic with persistence
 - **Handler**: `src/lambdas/topic/createManualTopic.handler`
-- **Funcionalidad**:
-  - Guarda tópico en archivo JSON
-  - Valida nombre del tópico
-  - Retorna ARN simulado
+- **Functionality**:
+  - Saves topic to JSON file
+  - Validates topic name
+  - Returns simulated ARN
 
 #### List Topics 
 - **Endpoint**: GET `/list-topics`
-- **Descripción**: Lista tópicos desde archivo JSON
+- **Description**: Lists topics from JSON file
 - **Handler**: `src/lambdas/topic/listTopics.handler`
-- **Funcionalidad**:
-  - Lee desde archivo persistente
-  - No incluye tópicos de ejemplo automáticamente
-  - Muestra solo tópicos creados por el usuario
+- **Functionality**:
+  - Reads from persistent file
+  - Does not include automatically generated topics
+  - Shows only topics created by the user
 
 #### Publish Topic 
 - **Endpoint**: POST `/publish-topic`
-- **Descripción**: Publica mensaje con validación de tópico
+- **Description**: Publishes a message with topic validation
 - **Handler**: `src/lambdas/publish/publishTopic.handler`
-- **Funcionalidad**:
-  - Valida que el tópico existe
-  - Simula envío a suscriptores
-  - Retorna información de delivery
+- **Functionality**:
+  - Validates that the topic exists
+  - Simulates delivery to subscribers
+  - Returns delivery information
 
 #### Subscribe Topic 
 - **Endpoint**: POST `/subscribe-topic`
-- **Descripción**: Suscribe con validación y webhook automático
+- **Description**: Subscribes with validation and automatic webhook
 - **Handler**: `src/lambdas/subscribe/subscribeTopic.handler`
-- **Funcionalidad**:
-  - Valida existencia del tópico
-  - Usa webhook automático: `http://127.0.0.1:4000/dev/webhook/{topicName}`
-  - Guarda suscripción en archivo JSON
+- **Functionality**:
+  - Validates topic existence
+  - Uses automatic webhook: `http://127.0.0.1:4000/dev/webhook/{topicName}`
+  - Saves subscription to JSON file
 
 #### List Subscription Topic
 - **Endpoint**: GET `/list-subscription-topic/{topicName}`
-- **Descripción**: Lista suscripciones de un tópico específico
+- **Description**: Lists subscriptions for a specific topic
 - **Handler**: `src/lambdas/subscribe/listSubscriptionTopic.handler`
-- **Características**:
-  - **Path Parameter**: El nombre del tópico se especifica en la URL
-  - **Validación**: Verifica que el topicName esté presente en la URL
-  - **Persistencia**: Lee suscripciones desde archivo JSON
-  - **Información Detallada**: Muestra datos completos de cada suscripción
-  - **Conteo**: Proporciona el total de suscripciones del tópico
+- **Characteristics**:
+  - **Path Parameter**: The topic name is specified in the URL
+  - **Validation**: Verifies that topicName is present in the URL
+  - **Persistence**: Reads subscriptions from JSON file
+  - **Detailed Information**: Shows complete data for each subscription
+  - **Count**: Provides the total number of subscriptions for the topic
 
 #### List All Subscriptions
 - **Endpoint**: GET `/list-all-subscriptions`
-- **Descripción**: Lista todas las suscripciones de todos los tópicos
+- **Description**: Lists all subscriptions for all topics
 - **Handler**: `src/lambdas/subscribe/listAllSubscriptions.handler`
-- **Funcionalidad**:
-  - Lista todas las suscripciones del sistema
-  - Filtrado opcional por tópico: `?topicName=X`
-  - Filtrado opcional por protocolo: `?protocol=Y`
-  - Filtrado combinado: `?topicName=X&protocol=Y`
-  - Agrupación por tópico y protocolo
-  - Estadísticas detalladas del sistema
-  - Información de archivos de persistencia
+- **Functionality**:
+  - Lists all subscriptions in the system
+  - Optional filtering by topic: `?topicName=X`
+  - Optional filtering by protocol: `?protocol=Y`
+  - Combined filtering: `?topicName=X&protocol=Y`
+  - Grouping by topic and protocol
+  - Detailed system statistics
+  - File persistence information
 
 #### Webhook Receiver
 - **Endpoint**: POST `/webhook/{topicName}`
-- **Descripción**: Recibe notificaciones SNS
+- **Description**: Receives SNS notifications
 - **Handler**: `src/lambdas/webhook/webhookReceiver.handler`
-- **Funcionalidad**:
-  - Recibe notificaciones HTTP
-  - Guarda en archivo JSON
-  - Responde 200 OK para evitar reintentos
+- **Functionality**:
+  - Receives HTTP notifications
+  - Saves to JSON file
+  - Responds 200 OK to avoid retries
 
 #### List Notifications 
 - **Endpoint**: GET `/list-notifications`
-- **Descripción**: Lista notificaciones recibidas
+- **Description**: Lists received notifications
 - **Handler**: `src/lambdas/webhook/listNotifications.handler`
-- **Funcionalidad**:
-  - Filtrado por tópico
-  - Agrupación por tópico
-  - Información detallada de cada notificación
+- **Functionality**:
+  - Filtered by topic
+  - Grouped by topic
+  - Detailed information for each notification
 
 #### Debug Endpoints 
 - **Endpoints**: `/debug-topics`, `/debug-subscriptions`, `/list-all-subscriptions`, `/list-notifications`
-- **Descripción**: Herramientas de debugging y monitoreo
-- **Características**:
-  - Estado actual del sistema
-  - Información detallada de archivos
-  - Estadísticas de uso
-  - Filtrado y agrupación de datos
-  - Solo disponible en modo offline
+- **Description**: Debugging and monitoring tools
+- **Characteristics**:
+  - Current system state
+  - Detailed file information
+  - Usage statistics
+  - Filtered and grouped data
+  - Only available in offline mode
 
-### 2.0.2) Configuración de Seguridad
 
-Todos los endpoints están protegidos con API Key. La configuración se realiza a través de:
-- API Gateway con clave API (`xApiKey`)
-- Variables de entorno gestionadas por SSM Parameter Store
+<br>
+
+### 2.0.2) Security Configuration
+
+All endpoints are protected with API Key. Configuration is done via:
+- API Gateway with API Key (`xApiKey`)
+- Environment variables managed by SSM Parameter Store
 
 </details>
 
 
-
-
-
-
-## Sección 3) Prueba de funcionalidad y Referencias. 
-
-
-## 3.0) Prueba de funcionalidad [🔝](#índice-)
-
-<details>
-  <summary>Ver</summary>
+<br>
 
 <br>
 
-### 3.0.0) Configuración del Entorno de Pruebas
 
-1. **Variables de Entorno en Postman**
-   | **Variable** | **Valor** | **Descripción** |
+
+## Section 3) Functionality Testing and References. 
+
+
+### 3.0) Functionality Testing [🔝](#index-)
+
+<details>
+  <summary>View</summary>
+
+<br>
+
+### 3.0.0) Test Environment Configuration
+
+1. **Environment Variables in Postman**
+   | **Variable** | **Value** | **Description** |
    |-------------|-----------|----------------|
-   | `base_url` | `http://localhost:4000/dev` | URL base para las peticiones |
-   | `x-api-key` | `f98d8cd98h73s204e3456998ecl9427j` | API Key para autenticación |
-   | `bearer_token` | `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c` | Token Bearer para autenticación |
+   | `base_url` | `http://localhost:4000/dev` | Base URL for requests |
+   | `x-api-key` | `f98d8cd98h73s204e3456998ecl9427j` | API Key for authentication |
+   | `bearer_token` | `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c` | Bearer Token for authentication |
 
-2. **Headers Necesarios**
+2. **Required Headers**
    ```json
    {
      "x-api-key": "{{x-api-key}}",
@@ -579,9 +601,9 @@ Todos los endpoints están protegidos con API Key. La configuración se realiza 
    }
    ```
 
-### 3.0.1) Ejemplos de Uso
+### 3.0.1) Usage Examples
 
-#### 1. Crear un Tópico
+#### 1. Create a Topic
 
 ##### Request (POST)
 
@@ -591,7 +613,7 @@ curl --location 'http://localhost:4000/dev/create-manual-topic' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --data '{
-    "name": "MiTópicoPrueba"
+    "name": "MyTestTopic"
 }'
 ```
 
@@ -602,8 +624,8 @@ curl --location 'http://localhost:4000/dev/create-manual-topic' \
     "statusCode": 200,
     "body": {
         "message": "Topic created successfully (Offline)",
-        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
-        "topicName": "MiTópicoPrueba",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic",
+        "topicName": "MyTestTopic",
         "note": "Topic is now available in the list-topics endpoint"
     }
 }
@@ -629,7 +651,7 @@ curl --location 'http://localhost:4000/dev/create-manual-topic' \
 
 <br>
 
-#### 2. Listar Tópicos
+#### 2. List Topics
 
 ##### Request (GET)
 
@@ -648,8 +670,8 @@ curl --location 'http://localhost:4000/dev/list-topics' \
         "message": "Topics retrieved successfully (Offline)",
         "topics": [
             {
-                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
-                "TopicName": "MiTópicoPrueba"
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic",
+                "TopicName": "MyTestTopic"
             }
         ],
         "totalTopics": 1
@@ -668,7 +690,7 @@ curl --location 'http://localhost:4000/dev/list-topics' \
 
 <br>
 
-#### 3. Debug de Tópicos
+#### 3. Debug Topics
 
 ##### Request (GET)
 
@@ -693,13 +715,13 @@ curl --location 'http://localhost:4000/dev/debug-topics' \
         },
         "topics": [
             {
-                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
-                "TopicName": "MiTópicoPrueba",
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic",
+                "TopicName": "MyTestTopic",
                 "createdAt": "2025-07-16T14:05:12.193Z"
             },
             {
-                "TopicArn": "arn:aws:sns:us-east-1:123456789012:OtroTópico",
-                "TopicName": "OtroTópico",
+                "TopicArn": "arn:aws:sns:us-east-1:123456789012:AnotherTopic",
+                "TopicName": "AnotherTopic",
                 "createdAt": "2025-07-16T14:05:12.200Z"
             }
         ],
@@ -724,7 +746,7 @@ curl --location 'http://localhost:4000/dev/debug-topics' \
 
 <br>
 
-#### 4. Suscribirse a un Tópico
+#### 4. Subscribe to a Topic
 
 ##### Request (POST)
 
@@ -734,9 +756,9 @@ curl --location 'http://localhost:4000/dev/subscribe-topic' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --data '{
-    "topicName": "MiTópicoPrueba",
+    "topicName": "MyTestTopic",
     "protocol": "http",
-    "endpoint": "http://127.0.0.1:4000/dev/webhook/MiTópicoPrueba"
+    "endpoint": "http://127.0.0.1:4000/dev/webhook/MyTestTopic"
 }'
 ```
 
@@ -747,11 +769,11 @@ curl --location 'http://localhost:4000/dev/subscribe-topic' \
     "statusCode": 200,
     "body": {
         "message": "Successfully subscribed to topic (Offline)",
-        "subscriptionArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba:1752674712193",
-        "topicName": "MiTópicoPrueba",
-        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+        "subscriptionArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic:1752674712193",
+        "topicName": "MyTestTopic",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic",
         "protocol": "http",
-        "endpoint": "http://127.0.0.1:4000/dev/webhook/MiTópicoPrueba"
+        "endpoint": "http://127.0.0.1:4000/dev/webhook/MyTestTopic"
     }
 }
 ```
@@ -763,8 +785,8 @@ curl --location 'http://localhost:4000/dev/subscribe-topic' \
     "statusCode": 400,
     "body": {
         "message": "Topic does not exist",
-        "requestedTopic": "TópicoInexistente",
-        "availableTopics": ["MiTópicoPrueba", "OtroTópico"]
+        "requestedTopic": "NonExistentTopic",
+        "availableTopics": ["MyTestTopic", "AnotherTopic"]
     }
 }
 ```
@@ -791,8 +813,8 @@ curl --location 'http://localhost:4000/dev/webhook/Topic1' \
     "Type": "Notification",
     "MessageId": "msg_1752674712193_abc123def",
     "TopicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
-    "Message": "Este es un mensaje de prueba",
-    "Subject": "Asunto de Prueba",
+    "Message": "This is a test message",
+    "Subject": "Test Subject",
     "Timestamp": "2025-07-16T14:05:12.193Z",
     "SignatureVersion": "1",
     "Signature": "example-signature",
@@ -825,7 +847,7 @@ curl --location 'http://localhost:4000/dev/webhook/Topic1' \
 
 <br>
 
-#### 6. Listar Todas las Suscripciones
+#### 6. List All Subscriptions
 
 ##### Request (GET)
 
@@ -870,7 +892,7 @@ curl --location 'http://localhost:4000/dev/list-all-subscriptions' \
 
 <br>
 
-#### 7. Listar Suscripciones de un Tópico Específico
+#### 7. List Subscriptions for a Specific Topic
 
 ##### Request (GET)
 
@@ -908,7 +930,7 @@ curl --location 'http://localhost:4000/dev/list-subscription-topic/Topic1' \
 
 <br>
 
-#### 8. Debug de Suscripciones
+#### 8. Debug Subscriptions
 
 ##### Request (GET)
 
@@ -950,7 +972,7 @@ curl --location 'http://localhost:4000/dev/debug-subscriptions' \
 
 <br>
 
-#### 9. Publicar Mensaje
+#### 9. Publish Message
 
 ##### Request (POST)
 
@@ -960,9 +982,9 @@ curl --location 'http://localhost:4000/dev/publish-topic' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' \
 --header 'Content-Type: application/json' \
 --data '{
-    "topicName": "MiTópicoPrueba",
-    "message": "Este es un mensaje de prueba",
-    "subject": "Asunto de Prueba"
+    "topicName": "MyTestTopic",
+    "message": "This is a test message",
+    "subject": "Test Subject"
 }'
 ```
 
@@ -974,8 +996,8 @@ curl --location 'http://localhost:4000/dev/publish-topic' \
     "body": {
         "message": "Message published successfully (Offline)",
         "messageId": "msg_1752674712193_abc123def",
-        "topicName": "MiTópicoPrueba",
-        "topicArn": "arn:aws:sns:us-east-1:123456789012:MiTópicoPrueba",
+        "topicName": "MyTestTopic",
+        "topicArn": "arn:aws:sns:us-east-1:123456789012:MyTestTopic",
         "deliveredToSubscriptions": 1,
         "note": "Notifications were simulated. Check webhook endpoint for actual delivery."
     }
@@ -989,15 +1011,15 @@ curl --location 'http://localhost:4000/dev/publish-topic' \
     "statusCode": 400,
     "body": {
         "message": "Topic does not exist",
-        "requestedTopic": "TópicoInexistente",
-        "availableTopics": ["MiTópicoPrueba", "OtroTópico"]
+        "requestedTopic": "NonExistentTopic",
+        "availableTopics": ["MyTestTopic", "AnotherTopic"]
     }
 }
 ```
 
 <br>
 
-#### 10. Listar Notificaciones Recibidas
+#### 10. List Received Notifications
 
 ##### Request (GET)
 
@@ -1007,7 +1029,7 @@ curl --location 'http://localhost:4000/dev/list-notifications' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
 ```
 
-##### Request con Filtro por Tópico (GET)
+##### Request with Topic Filter (GET)
 
 ```postman
 curl --location 'http://localhost:4000/dev/list-notifications?topicName=Topic1' \
@@ -1035,8 +1057,8 @@ curl --location 'http://localhost:4000/dev/list-notifications?topicName=Topic1' 
                 "id": "notif_1752674712193_abc123",
                 "topicName": "Topic1",
                 "topicArn": "arn:aws:sns:us-east-1:123456789012:Topic1",
-                "message": "Este es un mensaje de prueba",
-                "subject": "Asunto de Prueba",
+                "message": "This is a test message",
+                "subject": "Test Subject",
                 "messageId": "msg_1752674712193_abc123def",
                 "timestamp": "2025-07-16T14:05:12.193Z",
                 "receivedAt": "2025-07-16T14:05:12.200Z"
@@ -1049,139 +1071,139 @@ curl --location 'http://localhost:4000/dev/list-notifications?topicName=Topic1' 
 
 <br>
 
-### 3.0.2) Información de Debugging
+### 3.0.2) Debugging Information
 
-#### 📊 **Información que proporcionan los endpoints de debug**
+#### 📊 **Information provided by debug endpoints**
 
 ##### **`/debug-topics`**
-- Número total de tópicos
-- Lista completa de tópicos con ARNs
-- Nombres de tópicos disponibles
-- Ruta del archivo de persistencia
-- Estado del archivo (existe/no existe)
-- Contenido del archivo JSON
-- Estadísticas del archivo (tamaño, fechas)
+- Total number of topics
+- Complete list of topics with ARNs
+- Available topic names
+- File persistence path
+- File status (exists/does not exist)
+- File JSON content
+- File statistics (size, dates)
 
 ##### **`/debug-subscriptions`**
-- Número total de suscripciones
-- Número total de tópicos
-- Lista completa de suscripciones
-- Lista completa de tópicos
-- Agrupación de suscripciones por tópico
-- Nombres de tópicos disponibles
-- Información de archivos de persistencia
-- Estadísticas detalladas
+- Total number of subscriptions
+- Total number of topics
+- Complete list of subscriptions
+- Complete list of topics
+- Subscription grouping by topic
+- Available topic names
+- File persistence information
+- Detailed statistics
 
-#### 🔧 **Troubleshooting con Debug Endpoints**
+#### 🔧 **Troubleshooting with Debug Endpoints**
 
-##### **Problema: "Topic does not exist"**
+##### **Problem: "Topic does not exist"**
 ```bash
-# Verificar qué tópicos están disponibles
+# Verify which topics are available
 curl -X GET "http://localhost:4000/dev/debug-topics" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 ```
 
-##### **Problema: Suscripción no funciona**
+##### **Problem: Subscription not working**
 ```bash
-# Verificar estado de suscripciones
+# Verify subscription state
 curl -X GET "http://localhost:4000/dev/debug-subscriptions" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 
-# Ver todas las suscripciones
+# List all subscriptions
 curl -X GET "http://localhost:4000/dev/list-all-subscriptions" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 
-# Ver suscripciones de un tópico específico
+# List subscriptions for a specific topic
 curl -X GET "http://localhost:4000/dev/list-subscription-topic/Topic1" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 ```
 
-##### **Problema: No se reciben notificaciones**
+##### **Problem: No notifications received**
 ```bash
-# Verificar notificaciones recibidas
+# Verify received notifications
 curl -X GET "http://localhost:4000/dev/list-notifications" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 ```
 
-##### **Problema: Datos se pierden al reiniciar**
+##### **Problem: Data lost on restart**
 ```bash
-# Verificar persistencia de archivos
+# Verify file persistence
 curl -X GET "http://localhost:4000/dev/debug-topics" \
   -H "x-api-key: f98d8cd98h73s204e3456998ecl9427j"
 ```
 
-#### 📋 **Flujo de Debugging Recomendado**
+#### 📋 **Recommended Debugging Flow**
 
-1. **Crear tópico** → Verificar con `/debug-topics`
-2. **Suscribirse** → Verificar con `/debug-subscriptions` o `/list-all-subscriptions`
-3. **Publicar mensaje** → Verificar con `/list-notifications`
-4. **Si hay problemas** → Usar endpoints de debug para diagnosticar
-   - **Suscripciones**: `/list-all-subscriptions` o `/list-subscription-topic/{topicName}`
-   - **Tópicos**: `/debug-topics`
-   - **Notificaciones**: `/list-notifications`
+1. **Create topic** → Verify with `/debug-topics`
+2. **Subscribe** → Verify with `/debug-subscriptions` or `/list-all-subscriptions`
+3. **Publish message** → Verify with `/list-notifications`
+4. **If there are issues** → Use debug endpoints to diagnose
+   - **Subscriptions**: `/list-all-subscriptions` or `/list-subscription-topic/{topicName}`
+   - **Topics**: `/debug-topics`
+   - **Notifications**: `/list-notifications`
 
-#### ⚠️ **Limitaciones de los Endpoints de Debug**
+#### ⚠️ **Limitations of Debug Endpoints**
 
-- **Solo modo offline**: No funcionan en producción
-- **Requieren API Key**: Necesitan autenticación
-- **Solo para desarrollo**: No usar en producción
-- **Información sensible**: Pueden mostrar rutas de archivos
+- **Only offline mode**: Do not work in production
+- **Require API Key**: Need authentication
+- **Only for development**: Do not use in production
+- **Sensitive information**: May show file paths
 
-### 3.0.3) Notas Importantes
+### 3.0.3) Important Notes
 
-1. **Desarrollo Local Mejorado**
-   - Asegúrate de que el servidor local esté corriendo (`npm start`)
-   - Verifica que los puertos configurados estén disponibles
-   - Los mensajes SNS se simulan localmente con persistencia en archivos JSON
-   - Los datos persisten entre reinicios del servidor
+1. **Enhanced Local Development**
+   - Ensure the local server is running (`npm start`)
+   - Verify that the configured ports are available
+   - SNS messages are simulated locally with persistence in JSON files
+   - Data persists between server restarts
 
-2. **Sistema de Webhooks**
-   - Los webhooks automáticos usan: `http://127.0.0.1:4000/dev/webhook/{topicName}`
-   - Las notificaciones se guardan en `.serverless/offline-notifications.json`
-   - Puedes ver las notificaciones recibidas con `/list-notifications`
+2. **Webhooks System**
+   - Automatic webhooks use: `http://127.0.0.1:4000/dev/webhook/{topicName}`
+   - Notifications are saved in `.serverless/offline-notifications.json`
+   - You can view received notifications with `/list-notifications`
 
-3. **Persistencia de Datos**
-   - Tópicos: `.serverless/offline-topics.json`
-   - Suscripciones: `.serverless/offline-subscriptions.json`
-   - Notificaciones: `.serverless/offline-notifications.json`
-   - Los archivos se crean automáticamente al usar los endpoints
+3. **Data Persistence**
+   - Topics: `.serverless/offline-topics.json`
+   - Subscriptions: `.serverless/offline-subscriptions.json`
+   - Notifications: `.serverless/offline-notifications.json`
+   - Files are created automatically when using endpoints
 
-4. **Endpoints de Debug y Monitoreo**
-   - `/debug-topics`: Estado completo de tópicos con estadísticas
-   - `/debug-subscriptions`: Estado completo de suscripciones con agrupación
-   - `/list-all-subscriptions`: Todas las suscripciones con filtrado y estadísticas
-   - `/list-subscription-topic`: Suscripciones de un tópico específico
-   - `/list-notifications`: Notificaciones recibidas con filtrado
-   - Solo disponibles en modo offline
-   - Útiles para troubleshooting y monitoreo
+4. **Debugging and Monitoring Endpoints**
+   - `/debug-topics`: Full state of topics with statistics
+   - `/debug-subscriptions`: Full state of subscriptions with grouping
+   - `/list-all-subscriptions`: All subscriptions with filtering and statistics
+   - `/list-subscription-topic`: Subscriptions for a specific topic
+   - `/list-notifications`: Received notifications with filtering
+   - Only available in offline mode
+   - Useful for troubleshooting and monitoring
 
-5. **Manejo de Errores Mejorado**
-   - Códigos de error comunes:
-     - 400: Bad Request (datos inválidos, tópico no existe)
-     - 401: Unauthorized (API Key inválida)
-     - 404: Not Found (recurso no encontrado)
+5. **Enhanced Error Handling**
+   - Common error codes:
+     - 400: Bad Request (invalid data, topic does not exist)
+     - 401: Unauthorized (invalid API Key)
+     - 404: Not Found (resource not found)
      - 500: Internal Server Error
-   - Mensajes de error más descriptivos
-   - Lista de tópicos disponibles en errores
+   - More descriptive error messages
+   - List of available topics in errors
 
-6. **Validaciones**
-   - Verificación de existencia de tópicos antes de suscribirse
-   - Validación de parámetros de entrada
-   - Prevención de tópicos duplicados
+6. **Validations**
+   - Check for topic existence before subscribing
+   - Validate input parameters
+   - Prevent duplicate topics
 
-7. **Flujo de Trabajo Recomendado**
-   1. Crear tópico con `/create-manual-topic`
-   2. Verificar con `/list-topics` o `/debug-topics`
-   3. Suscribirse con `/subscribe-topic`
-   4. Verificar suscripción con `/list-subscription-topic/{topicName}` o `/list-all-subscriptions`
-   5. Publicar mensaje con `/publish-topic`
-   6. Ver notificaciones con `/list-notifications`
+7. **Recommended Workflow**
+   1. Create topic with `/create-manual-topic`
+   2. Verify with `/list-topics` or `/debug-topics`
+   3. Subscribe with `/subscribe-topic`
+   4. Verify subscription with `/list-subscription-topic/{topicName}` or `/list-all-subscriptions`
+   5. Publish message with `/publish-topic`
+   6. View notifications with `/list-notifications`
 
-8. **Limitaciones en Desarrollo Local**
-   - Las suscripciones por email no envían correos reales
-   - Los ARNs son simulados pero consistentes
-   - Las notificaciones se simulan pero se guardan para debugging
-   - Los webhooks HTTP funcionan completamente
+8. **Limitations in Local Development**
+   - Email subscriptions do not send real emails
+   - ARNs are simulated but consistent
+   - Notifications are simulated but saved for debugging
+   - HTTP webhooks function completely
 
 <br>
 
@@ -1189,14 +1211,14 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 
 
 
-### 3.1) Referencias [🔝](#índice-)
+### 3.1) References [🔝](#index-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>View</summary>
  
  <br>
 
-### Documentación Oficial
+### Official Documentation
 
 * [Serverless Framework Documentation](https://www.serverless.com/framework/docs)
 * [AWS SNS Documentation](https://docs.aws.amazon.com/sns/)
@@ -1204,7 +1226,7 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 * [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/)
 * [API Gateway Documentation](https://docs.aws.amazon.com/apigateway/)
 
-### Tutoriales y Ejemplos
+### Tutorials and Examples
 
 * [Tutorial aws-sdk v2](https://unpkg.com/browse/serverless-offline-sns@0.65.0/README.md)
 * [Amazon Simple Notification Service (SNS) JavaScript SDK v3 code examples](https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/sns)
@@ -1212,21 +1234,21 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 * [AWS SNS Best Practices](https://docs.aws.amazon.com/sns/latest/dg/sns-best-practices.html)
 * [Serverless Offline Plugin](https://github.com/dherault/serverless-offline)
 
-### Herramientas y Recursos
+### Tools and Resources
 
 * [Postman Documentation](https://learning.postman.com/docs/getting-started/introduction/)
 * [Node.js Documentation](https://nodejs.org/en/docs/)
 * [AWS CloudFormation Documentation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 * [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
 
-### Comunidad y Soporte
+### Community and Support
 
 * [Serverless Framework Forum](https://forum.serverless.com/)
 * [AWS Developer Forums](https://forums.aws.amazon.com/)
 * [Stack Overflow - Serverless Framework](https://stackoverflow.com/questions/tagged/serverless-framework)
 * [GitHub Issues - Serverless Framework](https://github.com/serverless/serverless/issues)
 
-### Videos y Cursos
+### Videos and Courses
 
 * [AWS SNS Tutorial](https://www.youtube.com/watch?v=m3hHhPwv1OU)
 * [Serverless Framework Crash Course](https://www.youtube.com/watch?v=71cd5XerKss)
