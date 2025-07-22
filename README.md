@@ -1,9 +1,41 @@
 ![Index app](./doc/assets/sns-example.png)
-# CRUD_SNS_NodeJS_AWS
-Modelo CRUD para la comunicación entre lambdas a través de amazon simple notification service (SNS) implementado con Systems Manager Parameter Store, Api-Gateway, Amazon SNS, Serverless-Framework, Lambda, NodeJs, aws sdk-v3, entre otros.
+<div align="right">
+  <img width="25" height="25" src="./doc/assets/icons/devops/png/aws.png" />
+  <img width="25" height="25" src="./doc/assets/icons/aws/png/lambda.png" />
+  <img width="27" height="27" src="./doc/assets/icons/devops/png/postman.png" />
+  <img width="29" height="27" src="./doc/assets/icons/devops/png/git.png" />
+  <img width="28" height="27" src="./doc/assets/icons/aws/png/api-gateway.png" />
+  <img width="23" height="25" src="./doc/assets/icons/aws/png/sqs.png" />
+  <img width="27" height="25" src="./doc/assets/icons/aws/png/parameter-store.png" />
+  <img width="27" height="27" src="./doc/assets/icons/backend/javascript-typescript/png/nodejs.png" />
+</div>
 
-* [Playlist proyecto](https://www.youtube.com/watch?v=sGK_4FQBdP8&list=PLCl11UFjHurCkJNddrHBJ_TUfMlrHuWyb)
+<br>
 
+<br>
+
+
+<div align="right"> 
+  <a href="./translations/README.es.md">
+    <img src="./doc/assets/translation/arg-flag.jpg" width="65" height="40" />
+  </a> 
+  <a href="./README.md">
+    <img src="./doc/assets/translation/eeuu-flag.jpg" width="65" height="40" />
+  </a> 
+</div>
+
+<br>
+
+<div align="center">
+
+# CRUD SNS Nodejs AWS ![(status-completed)](./doc/assets/icons/badges/status-completed.svg)
+
+</div>  
+
+CRUD serverless para Amazon SNS con Node.js y Serverless Framework. Permite crear, listar, publicar y suscribirse a tópicos SNS, con autenticación por API Key, persistencia local en archivos JSON, endpoints de debugging y simulación de webhooks. Incluye integración con SSM Parameter Store y soporte para desarrollo local con serverless-offline.
+
+*   [Postman Collection](./postman/collections/CRUD_SNS_AWS.postman_collection.json)   
+*   [Playlist functionality test](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO) <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO" target="_blank"> <img src="./doc/assets/social-networks/yt.png" width="25" /> </a>
 
 <br>
 
@@ -126,8 +158,6 @@ El sistema está compuesto por los siguientes componentes principales:
 <br>
 
 #### Flujo de Datos e Implementación
-
-![Flujo de Implementación SNS](./doc/assets/sns-flow.png)
 
 #### Pasos del Flujo
 1. **Crear Tópico** → Obtener TopicArn
@@ -439,17 +469,6 @@ El proyecto implementa un CRUD completo para Amazon SNS con los siguientes endpo
 
 ### 2.0.1) Detalles de Implementación
 
-#### Flujo de Implementación Mejorado
-![Flujo de Implementación SNS](./doc/assets/sns-flow.png)
-
-#### Pasos del Flujo Actualizado
-1. **Crear Tópico** → Persistir en archivo JSON
-2. **Listar Tópicos** → Leer desde archivo JSON
-3. **Suscribirse** → Validar tópico + guardar suscripción
-4. **Publicar Mensaje** → Simular envío a suscriptores
-5. **Recibir Notificación** → Webhook guarda en archivo
-6. **Listar Notificaciones** → Leer desde archivo JSON
-
 #### Create Manual Topic
 - **Endpoint**: POST `/create-manual-topic`
 - **Descripción**: Crea un nuevo tópico SNS con persistencia
@@ -538,6 +557,9 @@ El proyecto implementa un CRUD completo para Amazon SNS con los siguientes endpo
   - Filtrado y agrupación de datos
   - Solo disponible en modo offline
 
+
+<br>
+
 ### 2.0.2) Configuración de Seguridad
 
 Todos los endpoints están protegidos con API Key. La configuración se realiza a través de:
@@ -547,14 +569,16 @@ Todos los endpoints están protegidos con API Key. La configuración se realiza 
 </details>
 
 
+<br>
 
+<br>
 
 
 
 ## Sección 3) Prueba de funcionalidad y Referencias. 
 
 
-## 3.0) Prueba de funcionalidad [🔝](#índice-)
+### 3.0) Prueba de funcionalidad [🔝](#índice-)
 
 <details>
   <summary>Ver</summary>
