@@ -219,6 +219,18 @@ El proyecto incluye endpoints especializados para debugging en modo offline:
 <details>
   <summary>Ver</summary>
 
+<br>
+
+#### [Watch Functional test playlist](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO)
+
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO">
+    <img src="../doc/assets/sns-example-yt.png" />
+  </a> 
+
+<br>
+
+<br>  
+
 * Creamos un entorno de trabajo a través de algún ide, podemos o no crear una carpeta raíz para el proyecto, nos posicionamos sobre la misma
 ```git
 cd 'projectRootName'
@@ -583,7 +595,15 @@ Todos los endpoints están protegidos con API Key. La configuración se realiza 
 <details>
   <summary>Ver</summary>
 
+#### [Watch Functional test playlist](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO)
+
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO">
+    <img src="../doc/assets/sns-example-yt.png" />
+  </a> 
+
 <br>
+
+<br>  
 
 ### 3.0.0) Configuración del Entorno de Pruebas
 
@@ -1259,6 +1279,4 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 <br>
 
 </details>
-
-
 

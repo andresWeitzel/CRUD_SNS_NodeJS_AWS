@@ -217,6 +217,16 @@ The project includes specialized endpoints for debugging in offline mode:
 <details>
   <summary>View</summary>
 
+<br>
+
+#### [Watch Functional test playlist](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO)
+
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO">
+    <img src="./doc/assets/sns-example-yt.png" />
+  </a> 
+
+<br>
+
 * We create a working environment through some ide, we can or cannot create a root folder for the project, we position ourselves on it
 ```git
 cd 'projectRootName'
@@ -569,9 +579,6 @@ All endpoints are protected with API Key. Configuration is done via:
 
 <br>
 
-<br>
-
-
 
 ## Section 3) Functionality Testing and References. 
 
@@ -580,6 +587,16 @@ All endpoints are protected with API Key. Configuration is done via:
 
 <details>
   <summary>View</summary>
+
+<br>
+
+#### [Watch Functional test playlist](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO)
+
+  <a href="https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO">
+    <img src="./doc/assets/sns-example-yt.png" />
+  </a> 
+
+<br>
 
 <br>
 
