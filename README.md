@@ -40,9 +40,13 @@ Serverless CRUD for Amazon SNS with Node.js and Serverless Framework. Allows you
 ## Index 📜
 
 <details>
- <summary> View </summary>
+ <summary>View Details</summary>
  
- <br>
+<div align="right">
+
+`Latest update: 19/02/26` 
+
+</div>
  
 ### Section 1) Description, Technologies and References
 
@@ -72,7 +76,7 @@ Serverless CRUD for Amazon SNS with Node.js and Serverless Framework. Allows you
 ### 1.0) Description [🔝](#index-) 
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
  
  <br>
 
@@ -214,7 +218,7 @@ The project includes specialized endpoints for debugging in offline mode:
 ### 1.1) Project Execution [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -278,7 +282,7 @@ npm start
 ### 1.2) Configure the serverless project from scratch [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
  
  <br>
  
@@ -381,7 +385,7 @@ npm start
 ### 1.3) Technologies [🔝](#index-) 
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
  
  <br>
  
@@ -441,7 +445,7 @@ npm start
 ### 2.0) Endpoints and resources [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -585,7 +589,7 @@ All endpoints are protected with API Key. Configuration is done via:
 ### 3.0) Functionality Testing [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
 
 <br>
 
@@ -1230,7 +1234,7 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 ### 3.1) References [🔝](#index-)
 
 <details>
-  <summary>View</summary>
+  <summary>View Details</summary>
  
  <br>
 

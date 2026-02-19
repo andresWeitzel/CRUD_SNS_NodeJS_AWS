@@ -41,9 +41,13 @@ CRUD serverless para Amazon SNS con Node.js y Serverless Framework. Permite crea
 ## Índice 📜
 
 <details>
- <summary> Ver </summary>
+ <summary>Ver detalle</summary>
  
- <br>
+<div align="right">
+
+`Última actualización: 19/02/26` 
+
+</div>
  
 ### Sección 1) Descripción, Tecnologías y Referencias
 
@@ -74,7 +78,7 @@ CRUD serverless para Amazon SNS con Node.js y Serverless Framework. Permite crea
 ### 1.0) Descripción [🔝](#índice-) 
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
  
  <br>
 
@@ -216,7 +220,7 @@ El proyecto incluye endpoints especializados para debugging en modo offline:
 ### 1.1) Ejecución del Proyecto [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
 
 <br>
 
@@ -282,7 +286,7 @@ npm start
 ### 1.2) Configurar el proyecto serverless desde cero [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
  
  <br>
  
@@ -385,7 +389,7 @@ npm start
 ### 1.3) Tecnologías [🔝](#índice-) 
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
  
  <br>
  
@@ -445,7 +449,7 @@ npm start
 ### 2.0) Endpoints y recursos [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
 
 <br>
 
@@ -592,7 +596,7 @@ Todos los endpoints están protegidos con API Key. La configuración se realiza 
 ### 3.0) Prueba de funcionalidad [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
 
 #### [Watch Functional test playlist](https://www.youtube.com/playlist?list=PLCl11UFjHurDBEKoDX8LBe5PxRlUzkrXO)
 
@@ -1235,7 +1239,7 @@ curl -X GET "http://localhost:4000/dev/debug-topics" \
 ### 3.1) Referencias [🔝](#índice-)
 
 <details>
-  <summary>Ver</summary>
+  <summary>Ver detalle</summary>
  
  <br>
 
